@@ -1,0 +1,78 @@
+<!--OUR BLUEPRINT!-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Student's portal{% endblock %}</title>
+    <!--loads the path to static files - only if needed -->
+    <!--{% load staticfiles %}-->
+    <!--bootstrap, fonts from google -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+
+        <!--Header-->
+        <div class="navbar-header">
+            <!--this button apears when device doesn't have space to display our items-->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!--when clicked, it redirects to the homepage-->
+            <a class="navbar-brand" href="{# url 'index' #}">Student's Portal</a>
+        </div>
+
+        <!--Navigation items go here. For example: Recipies, User Profiles, etc.-->
+        <div class="collapse navbar-collapse" id="topNavBar">
+            <ul class="nav navbar-nav">
+                <li class="">
+                     <!--<a href="users/index.html">-->
+                    <a href="{% url 'index' %}">
+                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;Users
+                     </a>
+                </li>
+                <li class="">
+                    <!--Todo-->
+                     <a href="#">
+                         <span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>&nbsp;Recipes
+                     </a>
+                </li>
+                  <li class="">
+                    <!--Todo-->
+                     <a href="{% url 'register' %}">
+                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Register
+                     </a>
+                </li>
+            </ul>
+            <!--Todo: action-->
+            <form class="navbar-form navbar-left" role="search" method="get" action="#">
+                <div class="form-group">
+                    <!-- q - variable for user input -->
+                    <input type="text" class="form-control" name="q" value="">
+                </div>
+                <button type="submit" class="btn btn-info">Search</button>
+            </form>
+
+            <ul class="nav navbar-nav navbar-right" >
+                <li class="">
+                    <!--Todo-->
+                     <a href="#">
+                         <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp;Logout
+                     </a>
+                </li>
+            </ul>
+
+        </div>
+
+    </div>
+</nav>
+    {% block body %}
+    {% endblock %}
+</body>
+</html>

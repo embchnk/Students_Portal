@@ -12,6 +12,7 @@ def index(request):
     # return render(request, 'users/index.html', context)
     return render(request, 'users/index.html')
 
+
 class UserFormView(View):
     # blueprint
     form_class = UserForm
