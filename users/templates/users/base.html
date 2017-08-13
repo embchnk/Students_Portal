@@ -25,7 +25,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!--when clicked, it redirects to the homepage-->
-            <a class="navbar-brand" href="{% url 'index' %}">Student's Portal</a>
+            <a class="navbar-brand" href="{% url 'users:index' %}">Student's Portal</a>
         </div>
 
         <!--Navigation items go here. For example: Recipes, User Profiles, etc.-->
@@ -33,19 +33,19 @@
             <ul class="nav navbar-nav">
                 <li class="">
                      <!--<a href="users/index.html">-->
-                    <a href="{% url 'index' %}">
+                    <a href="{% url 'users:index' %}">
                          <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;Users
                      </a>
                 </li>
                 <li class="">
                     <!--Todo-->
-                     <a href="{% url 'bookRecipes' %}">
+                     <a href="{% url 'users:bookRecipes' %}">
                          <span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>&nbsp;Recipes
                      </a>
                 </li>
                   <li class="">
                     <!--Todo-->
-                     <a href="{% url 'register' %}">
+                     <a href="{% url 'users:register' %}">
                          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Register
                      </a>
                 </li>
@@ -70,7 +70,7 @@
             <ul class="nav navbar-nav navbar-right" >
                 <li class="">
                     <!--Todo-->
-                     <a href="{% url 'new_recipe' %}">
+                     <a href="{% url 'users:new_recipe' %}">
                          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add Recipe
                      </a>
                 </li>

@@ -87,6 +87,6 @@ class UserFormView(View):
                 if user.is_active:
                     login(request, user)
                     # request.user.(username,profilephoto, etc) - now we can reffer to user whenever we want
-                    redirect('users:index')
+                    return redirect('users:index')
 
         return render(request, self.template_name, {'form': form})
