@@ -89,4 +89,4 @@ class UserFormView(View):
                     # request.user.(username,profilephoto, etc) - now we can reffer to user whenever we want
                     redirect('users:index')
 
-            return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, {'form': form})
