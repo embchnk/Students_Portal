@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
 from .forms import UserForm, LoginForm
+from .models import Profile
 
 
 def index(request):
@@ -21,6 +22,9 @@ class UserFormView(View):
 
     # display blank form to the user
     def get(self, request):
+        if request.user.is_authenticated:
+            return redirect('users:index')
+
         form = self.form_class(None)
         return render(request, self.template_name, {'form': form})
 
@@ -36,6 +40,8 @@ class UserFormView(View):
             password = form.cleaned_data['password']
             user.set_password(password)
             user.save()
+            profile = Profile.objects.create(user = user)
+            profile.save()
 
             # returns User object if credentials are correct
             user = authenticate(username=username, password=password)
@@ -74,10 +80,16 @@ class UserLoginFormView(View):
 
     def post(self, request):
         form = self.form_class(request.POST)
-
         return login_user_view(request)
 
 
 def logout_user_view(request):
     logout(request)
     return redirect('users:index')
+
+def user_info(request):
+    if not request.user.is_authenticated:
+        return redirect('users:index')
+
+    profiles = request.user.profile
+    return render(request, 'users/user_info.html', {'user': request.user})

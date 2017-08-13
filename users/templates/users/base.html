@@ -54,7 +54,7 @@
                              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Register
                          </a>
                           {% else %}
-                          <a href="#">
+                          <a href="{% url 'users:user-info' %}">
                              <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;{{ user.username }}
                           </a>
                           {% endif %}

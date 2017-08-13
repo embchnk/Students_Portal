@@ -1,0 +1,37 @@
+{% extends 'users/base.html' %}
+{% block title %}Details for user.username{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-7">
+            <div class="panel panel-success">
+                <div class="panel-body">
+                    <h2>User informations:</h2>
+                    <h3>{{ user.username }}</h3>
+                    <p />
+                    <label>Registration date: </label>
+                    <label>{{ user.date_joined }}</label>
+                    <br />
+                    <label>Last login: </label>
+                    <label>{{ user.last_login }}</label>
+                    <br />
+                    <label>Points:</label>
+                    <label>{{ user.profile.points }}</label>
+                    <br />
+                    <label>Birth date:</label>
+                    <label>{{ user.profile.birth_date }}</label>
+                    <br />
+                    <label>Description: </label>
+                    <label>{{ user.profile.description }}</label>
+                    <br />
+                    <label>Location: </label>
+                    <label>{{ user.profile.location.city_name }}</label>
+                    <br />
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
