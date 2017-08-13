@@ -1,0 +1,31 @@
+{% extends 'users/base.html' %}
+{% block title %}Recipes{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-sm-12 col-md-7">
+            <div class="panel panel-success">
+                <div class="panel-body">
+                    <h2>Recipes</h2>
+                        {% if all_recipes  %}
+                        <ul class="form-group">
+                           {% for recipe in all_recipes %}
+                               <li>
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <a class="text-danger small" href="{% url 'single_recipe' recipe.id%}">{{ recipe.title }} </a>
+                                    </div>
+                               </li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                            <h3>Pusto jest</h3>
+                        {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

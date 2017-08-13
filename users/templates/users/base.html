@@ -18,34 +18,34 @@
 
         <!--Header-->
         <div class="navbar-header">
-            <!--this button apears when device doesn't have space to display our items-->
+            <!--this button appears when device doesn't have space to display our items-->
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
             <!--when clicked, it redirects to the homepage-->
-            <a class="navbar-brand" href="{# url 'index' #}">Student's Portal</a>
+            <a class="navbar-brand" href="{% url 'users:index' %}">Student's Portal</a>
         </div>
 
-        <!--Navigation items go here. For example: Recipies, User Profiles, etc.-->
+        <!--Navigation items go here. For example: Recipes, User Profiles, etc.-->
         <div class="collapse navbar-collapse" id="topNavBar">
             <ul class="nav navbar-nav">
                 <li class="">
                      <!--<a href="users/index.html">-->
-                    <a href="{% url 'index' %}">
+                    <a href="{% url 'users:index' %}">
                          <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;Users
                      </a>
                 </li>
                 <li class="">
                     <!--Todo-->
-                     <a href="#">
+                     <a href="{% url 'users:bookRecipes' %}">
                          <span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>&nbsp;Recipes
                      </a>
                 </li>
                   <li class="">
                     <!--Todo-->
-                     <a href="{% url 'register' %}">
+                     <a href="{% url 'users:register' %}">
                          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Register
                      </a>
                 </li>
@@ -64,6 +64,14 @@
                     <!--Todo-->
                      <a href="#">
                          <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp;Logout
+                     </a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" >
+                <li class="">
+                    <!--Todo-->
+                     <a href="{% url 'users:new_recipe' %}">
+                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add Recipe
                      </a>
                 </li>
             </ul>
