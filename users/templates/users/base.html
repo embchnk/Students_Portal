@@ -32,21 +32,9 @@
         <div class="collapse navbar-collapse" id="topNavBar">
             <ul class="nav navbar-nav">
                 <li class="">
-                     <!--<a href="users/index.html">-->
-                    <a href="{% url 'users:index' %}">
-                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;Users
-                     </a>
-                </li>
-                <li class="">
                     <!--Todo-->
                      <a href="#">
                          <span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>&nbsp;Recipes
-                     </a>
-                </li>
-                  <li class="">
-                    <!--Todo-->
-                     <a href="{% url 'users:register' %}">
-                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Register
                      </a>
                 </li>
             </ul>
@@ -60,6 +48,17 @@
             </form>
 
             <ul class="nav navbar-nav navbar-right" >
+                      <li class="">
+                        {% if not user.is_authenticated %}
+                         <a href="{% url 'users:register' %}">
+                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Register
+                         </a>
+                          {% else %}
+                          <a href="#">
+                             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;{{ user.username }}
+                          </a>
+                          {% endif %}
+                      </li>
                 <li class="">
                     <!--Todo-->
                     {% if user.is_authenticated %}
