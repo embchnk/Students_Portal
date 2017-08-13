@@ -1,0 +1,92 @@
+{% extends 'users/base.html' %}
+{% block title %}Add recipe{% endblock %}
+
+{% block body %}
+    <script type="text/javascript">
+    var i=0
+    function add_ingredient()
+    {
+        var myArray=[];
+        for(var j=0;j<i+1;j++) myArray.push(document.getElementById("i" + j).value);
+        
+        i++;
+        document.getElementById("addition").innerHTML +='<div class="form-group"> ' +
+            '<label class="control-label col-sm-2">Ingredient '+(i+1)+'</label> ' +
+            '<input type="text" name="i\'+i+\'" id="i\'+i+\'"/> ' +
+            '</div>';
+
+        for(j=0;j<i;j++) document.getElementById("i"+j).value = myArray[j];
+
+        document.getElementById("number").value = i;
+
+    }
+    </script>
+
+    <!-- I check if result was succesfull or abortive-->
+    {% if result %}
+        {% if result == 'True' %}
+            <h3 style="color: green;">Recipe is added</h3>
+        {% else %}
+            <h3 style="color: red;">Could't add item</h3>
+        {% endif %}
+    {% endif %}
+
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-sm-12 col-md-7">
+            <div class="panel panel-success">
+                <div class="panel-body">
+                    <h2>Add your recipe here</h2>
+                    <form class="form-horizontal" action="{% url 'result_of_addition_recipe' %}" method="post" enctype="multipart/form-data">
+                        <!--it is for security purposes-->
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Name of dish</label>
+                            <input type="text" name="name" id="name" value="defautl"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Level</label>
+                            <input type="text" name="level"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Link to photo</label>
+                            <input type="text" name="dish_photo"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Recipe</label>
+                            <input type="text" name="instruction" class="col-sm-12 col-md-7">
+                        </div>
+                        <!-- my fields for ingredients-->
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Number of ingredients</label>
+                            <input type="number" id = "number" name="number" value="0" readonly>
+                        </div>
+                        <div id="addition">
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">Ingredient 1</label>
+                                <input type="text" name="i0" id="i0"/>
+                            </div>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-success" onclick="add_ingredient()">+</button>
+                        </div>
+                        <!-- end-->
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <input type="submit" class="btn btn-success" value="Submit" />
+                            </div>
+                        </div>
+                        <p id="test">
+                        </p>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
