@@ -1,6 +1,9 @@
 from django.shortcuts import render
-from .models import Recipe, User, Ingredient
+from .models import Recipe, Ingredient
+from users.models import Profile, User
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponseNotFound
+from django.contrib.auth import get_user
 
 # Create your views here.
 def bookRecipes(request):
@@ -20,25 +23,36 @@ def single_recipe(request, recipe_id):
     return render(request, 'recipes/single_recipe.html', {'single_recipe': single_recipe})
 
 def new_recipe(request):
-    return render(request, 'recipes/recipe_form.html')
+    if request.user is not None:
+        if request.user.is_authenticated:
+            return render(request, 'recipes/recipe_form.html')
+        return HttpResponseNotFound('<h1>Page not found</h1>')
+
 
 def result_of_addition_recipe(request):
-    if request.POST['name'] and request.POST['i0'] and request.POST['instruction']:
-        r1 = Recipe(author = User.objects.first(), title=request.POST['name'], likes=0, instructions="asdfasd", level=request.POST['level'], dish_photo=request.POST['dish_photo'])
-        r1.save()
-        for i in range(int(request.POST['number'])-1):
-            iter = 'i'+str(i)
-            #now i check if ingredient is located in our database
-            if check_database(request.POST[iter]) is not None:
-                ingredient = check_database(request.POST[iter])
-            else:
-                ingredient = Ingredient(name=request.POST[iter], how_many="a little")
-            ingredient.save()
-            ingredient.recipe.add(r1)
-        return render(request, 'recipes/recipe_form.html', {'result': 'True'})
+    u = get_user(request)
+    if u is not None:
+        if u.is_authenticated and request.POST['name'] and request.POST['i0'] and request.POST['instruction']:
+            profile = Profile.objects.get(id=1)
+            recipe = Recipe(author=profile, title=request.POST['name'], likes=0, instruction=request.POST['instruction'], level=request.POST['level'])
+            recipe.save()
+            for i in range(int(request.POST['number'])-1):
+                iter = 'i'+str(i)
+                #now i check if ingredient is located in our database
+                if check_database(request.POST[iter]) is None:
+                    ingredient = Ingredient(name=request.POST[iter], how_many="a little")
+                    ingredient.save()
+                else:
+                    ingredient = check_database(request.POST[iter])
+                ingredient.recipe.add(recipe)
+            return render(request, 'recipes/recipe_form.html', {'result': 'True'})
+        else:
+            return render(request, 'recipes/recipe_form.html', {'result': 'False'})
     else:
-        return render(request, 'recipes/recipe_form.html', {'result': 'False'})
-
+        return redirect('users:index')
 
 def check_database(name_of):
-    return Ingredient.objects.filter(name = name_of)
+    if Ingredient.objects.filter(name = name_of).exists():
+        return Ingredient.objects.filter(name = name_of)
+    else:
+        return None
