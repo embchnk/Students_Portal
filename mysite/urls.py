@@ -19,5 +19,7 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # when user request anything that starts with users - go to users.urls to find out what to do
-    url(r'^users/', include('users.urls')),
+    url(r'^users/', include('users.urls', namespace="users")),
+    url(r'^users/', include('recipes.urls', namespace="recipes")),
+    #url(r'^users/', include('users.urls')),
 ]
