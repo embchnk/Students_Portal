@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
 from .forms import UserForm, LoginForm
-from .models import Profile
+from .models import Profile, Location
 
 
 def index(request):
@@ -91,5 +91,49 @@ def user_info(request):
     if not request.user.is_authenticated:
         return redirect('users:index')
 
-    profiles = request.user.profile
-    return render(request, 'users/user_info.html', {'user': request.user})
+    leaders = Profile.objects.order_by('points').all()
+    locations = Location.objects.all()
+    return render(request, 'users/user_info.html', {
+        'user': request.user,
+        'leaders': leaders,
+        'locations': locations,})
+
+def user_info_update(request):
+    if not request.user.is_authenticated:
+        return redirect('users:index')
+
+    profile = request.user.profile
+    if 'new-image' in request.FILES:
+        image = request.FILES['new-image']
+        profile.profile_image.save('image' + str(request.user.username), image)
+
+    email = request.POST['email-edit']
+    first_name = request.POST['first-name-edit']
+    last_name = request.POST['last-name-edit']
+    description = request.POST['description-edit']
+    location_name = request.POST['location-edit']
+    location = None
+    if location_name != '-------------------':
+        location = Location.objects.get(city_name = location_name)
+
+    profile.user.email = email
+    profile.user.first_name = first_name
+    profile.user.last_name = last_name
+    profile.user.save()
+    profile.description = description
+    profile.location = location
+    profile.save()
+    return redirect('users:user-info')
+
+def user_info_change_password(request):
+    if not request.user.is_authenticated:
+        return redirect('users:user-info')
+
+    oldPassword = request.POST['old-password']
+    newPassword = request.POST['new-password']
+    newPasswortRepeat = request.POST['new-password-repeat']
+    if request.user.check_password(oldPassword) and newPassword == newPasswortRepeat:
+        request.user.set_password(newPassword)
+        request.user.save()
+
+    return redirect('users:user-info')

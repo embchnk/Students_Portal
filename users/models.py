@@ -6,10 +6,16 @@ class Location(models.Model):
     longitude = models.CharField(max_length=50)
     latitude = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.city_name
+
 # class extending class User
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    birth_date = models.DateField(null=True, blank=True)
+    profile_image = models.FileField(null=True)
     description = models.TextField(max_length=500, blank=True)
     points = models.IntegerField(default=0)
     location = models.ForeignKey(Location, models.DO_NOTHING, null=True)
+
+    def __str__(self):
+        return "Profile for " + self.user.username

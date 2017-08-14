@@ -1,37 +1,153 @@
 {% extends 'users/base.html' %}
 {% block title %}Details for user.username{% endblock %}
 
+{% load static %}
 {% block body %}
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12 col-md-7">
             <div class="panel panel-success">
                 <div class="panel-body">
-                    <h2>User informations:</h2>
-                    <h3>{{ user.username }}</h3>
-                    <p />
-                    <label>Registration date: </label>
-                    <label>{{ user.date_joined }}</label>
-                    <br />
-                    <label>Last login: </label>
-                    <label>{{ user.last_login }}</label>
-                    <br />
-                    <label>Points:</label>
-                    <label>{{ user.profile.points }}</label>
-                    <br />
-                    <label>Birth date:</label>
-                    <label>{{ user.profile.birth_date }}</label>
-                    <br />
-                    <label>Description: </label>
-                    <label>{{ user.profile.description }}</label>
-                    <br />
-                    <label>Location: </label>
-                    <label>{{ user.profile.location.city_name }}</label>
-                    <br />
+                    <h2 class="user-panel-title">User informations: <strong>{{ user.username }}</strong></h2>
+                    <form class="form-horizontal" action="{% url 'users:user-info-update' %}" method="post" enctype="multipart/form-data">
+                        <div class="row profile">
+                            <div class="col-sm-3">
+                                {% if user.profile.profile_image %}
+                                <img src="../../{{ user.profile.profile_image.url }}" class="img-responsive user-img" width="100%" height="140"/>
+                                {% else %}
+                                <img src="{% static 'users/default_user.png' %}" alt="logo" class="img-responsive user-img" width="100%" height="140"/>
+                                {% endif %}
+                                {% csrf_token %}
+                                <input type="file" accept="image/*" name="new-image">
+                                <br>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="user-info-text">Registration date: {{ user.date_joined|date:'Y-m-d H:i:s' }}</p>
+                                <p class="user-info-text">Last login: {{ user.last_login|date:'Y-m-d H:i:s' }}</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="emailEdit" class="col-sm-2 control-label">E-mail:</label>
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" name="email-edit" id="emailEdit" value="{{ user.email }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="firstNameEdit" class="col-sm-2 control-label">First Name:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="first-name-edit" id="firstNameEdit" value="{{ user.first_name }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastNameEdit" class="col-sm-2 control-label">Last Name:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="last-name-edit" id="lastNameEdit" value="{{ user.last_name }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="descriptionEdit" class="col-sm-2 control-label">Description:</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" rows="2" name="description-edit" id="descriptionEdit">{{ user.profile.description }}</textarea>
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label for="locationEdit" class="col-sm-2 control-label">Location:</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="locationEdit" name="location-edit">
+                                    {% if not user.profile.location %}
+                                        <option selected>-------------------</option>
+                                    {% endif %}
+                                    {% for location in locations %}
+                                        {% if user.profile.location == location %}
+                                            <option selected>{{ location.city_name }}</option>
+                                        {% else %}
+                                            <option>{{ location.city_name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary profile-btn">Save</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-7">
+            <div class="panel panel-success">
+                <div class="panel-body">
+                    <h2>Change password</h2>
+                    <form class="form-horizontal" action="{% url 'users:user-info-change-password' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="oldPassword" class="col-sm-2 control-label">Old password:</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" name="old-password" id="oldPassword" placeholder="Old Password" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword" class="col-sm-2 control-label">New password:</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" pattern=".{0}|.{8,}" name="new-password" id="newPassword" placeholder="New Password"
+                                       required title="Minimum of 8 characters.">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <input type="password" class="form-control" name="new-password-repeat" id="newPasswordRepeat" data-match="#inputPassword"
+                                       data-match-error="Whoops, these don't match" placeholder="Confirm New Password" required>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary profile-btn">Change</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-7">
+            <div class="panel panel-success">
+                <div class="panel-body">
+                    <h2>Your score: {{ user.profile.points }}</h2>
+                    <h3>
+                    {% if leaders.0 %}
+                        <p class="trophy-icon"><img src="{% static 'users/trophy_gold.png' %}" class="img-responsive" width="20" height="40"/></p>
+                        <p
+                            {% if leaders.0.user.id == user.id %}
+                                class="trophy-text trophy-text-me"
+                            {% else %}
+                                class="trophy-text"
+                            {% endif %}>{{ leaders.0.user.username }}: {{ leaders.0.points }} pts.</p>
+                        {% endif %}
+                    {% if leaders.1 %}
+                        <p class="trophy-icon"><img src="{% static 'users/trophy_silver.png' %}" class="img-responsive" width="20" height="40"/></p>
+                        <p
+                            {% if leaders.1.user.id == user.id %}
+                                class="trophy-text trophy-text-me"
+                            {% else %}
+                                class="trophy-text"
+                            {% endif %}>{{ leaders.1.user.username }}: {{ leaders.1.points }} pts.</p>
+                    {% endif %}
+                    {% if leaders.2 %}
+                        <p class="trophy-icon"><img src="{% static 'users/trophy_bronze.png' %}" class="img-responsive" width="20" height="40"/></p>
+                        <p
+                            {% if leaders.2.user.id == user.id %}
+                                class="trophy-text trophy-text-me"
+                            {% else %}
+                                class="trophy-text"
+                            {% endif %}>{{ leaders.2.user.username }}: {{ leaders.2.points }} pts.</p>
+                    {% endif %}
+                    </h3>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

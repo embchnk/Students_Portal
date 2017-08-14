@@ -1,0 +1,46 @@
+.trophy-icon {
+    float:left;
+    margin-right:10px;
+}
+
+.trophy-text {
+    line-height:23px;
+}
+
+.trophy-text-me {
+    font-weight:bold;
+}
+
+.user-info-text {
+    font-weight:bold;
+    font-size:16px;
+}
+
+.control-label {
+    text-align:left !important;
+    padding-left:30px
+}
+
+.user-img {
+    margin-bottom:15px;
+}
+
+.profile {
+    margin:20px 0 0 0;
+}
+.user-panel-title {
+    padding:0;
+    margin:0;
+}
+
+.user-name {
+    padding:0;
+    margin:10px 0 10px 15px;
+    font-weight:bold;
+}
+
+.profile-btn {
+    float:right;
+    margin-right:15px;
+    margin-bottom:-10px;
+}
