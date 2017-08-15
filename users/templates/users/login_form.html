@@ -8,7 +8,12 @@
         <div class="col-sm-12 col-md-7">
             <div class="panel panel-success">
                 <div class="panel-body">
-                    <h2>Login here</h2>
+                    <h2>Log in here</h2>
+                    {% if not login_status %}
+                    <font color="red">
+                        <h4><i>Enter correct username and password</i></h4>
+                    </font>
+                    {% endif %}
                     <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
                         <!--it is for security purposes-->
                         {% csrf_token %}

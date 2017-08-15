@@ -65,7 +65,7 @@ def login_user_view(request):
         login(request, user)
         return redirect('users:index')
     else:
-        return render(request, 'users/index.html', {'user': request.user})
+        return render(request, 'users/login_form.html', {'form': LoginForm, 'login_status': False})
 
 
 class UserLoginFormView(View):
@@ -76,7 +76,7 @@ class UserLoginFormView(View):
 
     def get(self, request):
         form = self.form_class(None)
-        return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, {'form': form, 'login_status': True})
 
     def post(self, request):
         form = self.form_class(request.POST)
