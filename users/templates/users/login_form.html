@@ -9,10 +9,14 @@
             <div class="panel panel-success">
                 <div class="panel-body">
                     <h2>Log in here</h2>
-                    {% if not login_status %}
-                    <font color="red">
-                        <h4><i>Enter correct username and password</i></h4>
-                    </font>
+                    {% if messages %}
+                        <ul class="messages">
+                        {% for message in messages %}
+                            <font color="red">
+                                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}><i>{{ message }}</i></li>
+                            </font>
+                            {% endfor %}
+                        </ul>
                     {% endif %}
                     <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
                         <!--it is for security purposes-->

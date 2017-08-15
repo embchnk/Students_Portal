@@ -1,10 +1,9 @@
-from django.shortcuts import render
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
 from .forms import UserForm, LoginForm
 from .models import Profile, Location
+from django.contrib import messages
 
 
 def index(request):
@@ -65,7 +64,8 @@ def login_user_view(request):
         login(request, user)
         return redirect('users:index')
     else:
-        return render(request, 'users/login_form.html', {'form': LoginForm, 'login_status': False})
+        messages.add_message(request, messages.ERROR, 'Invalid username or password')
+        return render(request, 'users/login_form.html', {'form': LoginForm})
 
 
 class UserLoginFormView(View):
