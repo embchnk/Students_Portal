@@ -40,11 +40,14 @@ def result_of_addition_recipe(request):
                 temp_i = 'i'+str(i)
                 temp_how_many = 'how_many'+str(i)
                 #now i check if ingredient is located in our database
+                how_many = "none"
+                if request.POST[temp_how_many] is not None:
+                    how_many=request.POST[temp_how_many]
                 if check_database(request.POST[temp_i]) is None:
-                    ingredient = Ingredient(name=request.POST[temp_i], how_many=request.POST[temp_how_many])
+                    ingredient = Ingredient(name=request.POST[temp_i], how_many=how_many)
                     ingredient.save()
                 else:
-                    ingredient = check_database(request.POST[iter])
+                    ingredient = check_database(request.POST[iter], how_many)
                 ingredient.recipe.add(new_recipe)
             return render(request, 'recipes/recipe_form.html', {'result': 'True'})
         else:
@@ -52,8 +55,8 @@ def result_of_addition_recipe(request):
     else:
         return redirect('users:index')
 
-def check_database(name_of):
-    if Ingredient.objects.filter(name = name_of).exists():
-        return Ingredient.objects.get(name = name_of)
+def check_database(name_of,how_many):
+    if Ingredient.objects.filter(name = name_of, how_many=how_many).exists():
+        return Ingredient.objects.get(name = name_of, how_many=how_many)
     else:
         return None
