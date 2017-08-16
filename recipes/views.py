@@ -33,7 +33,7 @@ def result_of_addition_recipe(request):
     u = get_user(request)
     if u is not None:
         if u.is_authenticated and request.POST['name'] and request.POST['i0'] and request.POST['instruction']:
-            profile = Profile.objects.get(id=1)
+            profile = Profile.objects.first()
             recipe = Recipe(author=profile, title=request.POST['name'], likes=0, instruction=request.POST['instruction'], level=request.POST['level'])
             recipe.save()
             for i in range(int(request.POST['number'])-1):
