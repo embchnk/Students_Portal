@@ -14,7 +14,7 @@
                            {% for recipe in all_recipes %}
                                <li>
                                     <div class="col-sm-offset-2 col-sm-10">
-                                        <a class="text-danger small" href="{% url 'single_recipe' recipe.id%}">{{ recipe.title }} </a>
+                                        <a class="text-danger small" href="{% url 'recipes:single_recipe' recipe.id%}">{{ recipe.title }} </a>
                                     </div>
                                </li>
                             {% endfor %}

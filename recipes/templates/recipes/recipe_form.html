@@ -3,7 +3,7 @@
 
 {% block body %}
     <script type="text/javascript">
-    var i=0
+    var i=0;
     function add_ingredient()
     {
         var myArray=[];
@@ -12,7 +12,7 @@
         i++;
         document.getElementById("addition").innerHTML +='<div class="form-group"> ' +
             '<label class="control-label col-sm-2">Ingredient '+(i+1)+'</label> ' +
-            '<input type="text" name="i\'+i+\'" id="i\'+i+\'"/> ' +
+            '<input type="text" name="i'+i+'" id="i'+i+'"/> ' +
             '</div>';
 
         for(j=0;j<i;j++) document.getElementById("i"+j).value = myArray[j];
@@ -39,7 +39,7 @@
             <div class="panel panel-success">
                 <div class="panel-body">
                     <h2>Add your recipe here</h2>
-                    <form class="form-horizontal" action="{% url 'result_of_addition_recipe' %}" method="post" enctype="multipart/form-data">
+                    <form class="form-horizontal" action="{% url 'recipes:result_of_addition_recipe' %}" method="post" enctype="multipart/form-data">
                         <!--it is for security purposes-->
                         {% csrf_token %}
                         <div class="form-group">

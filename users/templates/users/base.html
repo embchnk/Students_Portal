@@ -34,7 +34,7 @@
             <ul class="nav navbar-nav">
                 <li class="">
                     <!--Todo-->
-                     <a href="#">
+                     <a href="{% url 'recipes:bookRecipes' %}">
                          <span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>&nbsp;Recipes
                      </a>
                 </li>
@@ -49,6 +49,13 @@
             </form>
 
             <ul class="nav navbar-nav navbar-right" >
+                        <li class="">
+                        {% if user.is_authenticated %}
+                         <a href="{% url 'recipes:new_recipe' %}">
+                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add recipe
+                         </a>
+                          {% endif %}
+                      </li>
                       <li class="">
                         {% if not user.is_authenticated %}
                          <a href="{% url 'users:register' %}">
