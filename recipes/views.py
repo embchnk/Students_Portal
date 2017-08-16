@@ -4,6 +4,7 @@ from users.models import Profile, User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseNotFound
 from django.contrib.auth import get_user
+from django.db.models import Q
 
 # Create your views here.
 def bookRecipes(request):
@@ -43,11 +44,11 @@ def result_of_addition_recipe(request):
                 how_many = "none"
                 if request.POST[temp_how_many] is not None:
                     how_many=request.POST[temp_how_many]
-                if check_database(request.POST[temp_i]) is None:
+                if check_database(request.POST[temp_i], how_many) is None:
                     ingredient = Ingredient(name=request.POST[temp_i], how_many=how_many)
                     ingredient.save()
                 else:
-                    ingredient = check_database(request.POST[iter], how_many)
+                    ingredient = check_database(request.POST[temp_how_many], how_many)
                 ingredient.recipe.add(new_recipe)
             return render(request, 'recipes/recipe_form.html', {'result': 'True'})
         else:
@@ -56,7 +57,8 @@ def result_of_addition_recipe(request):
         return redirect('users:index')
 
 def check_database(name_of,how_many):
-    if Ingredient.objects.filter(name = name_of, how_many=how_many).exists():
-        return Ingredient.objects.get(name = name_of, how_many=how_many)
-    else:
+    try:
+        if Ingredient.objects.get(Q(name=name_of) & Q(how_many=how_many)) is not None:
+            return Ingredient.objects.get(Q(name=name_of) & Q(how_many=how_many))
+    except Ingredient.DoesNotExist:
         return None
