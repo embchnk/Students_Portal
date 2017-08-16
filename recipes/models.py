@@ -12,7 +12,7 @@ class Recipe(models.Model):
     dish_photo = models.CharField(max_length=10000)
 
     def __str__(self):
-        return self.title+'-'+self.author.user.first_name+ '-'+ str(self.likes)+ '-'+ str(self.level)
+        return self.title
 
 class Ingredient(models.Model):
     name = models.CharField(max_length=100)

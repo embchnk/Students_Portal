@@ -6,16 +6,24 @@
     var i=0;
     function add_ingredient()
     {
-        var myArray=[];
-        for(var j=0;j<i+1;j++) myArray.push(document.getElementById("i" + j).value);
+        var myArrayI=[];
+        var myArrayHowMany=[];
+        for(var j=0;j<i+1;j++) {
+            myArrayI.push(document.getElementById("i" + j).value);
+            myArrayHowMany.push(document.getElementById("how_many" + j).value);
+        }
         
         i++;
         document.getElementById("addition").innerHTML +='<div class="form-group"> ' +
             '<label class="control-label col-sm-2">Ingredient '+(i+1)+'</label> ' +
             '<input type="text" name="i'+i+'" id="i'+i+'"/> ' +
+            '<input type="text" name="how_many'+i+'" id="how_many'+i+'"/>'+
             '</div>';
 
-        for(j=0;j<i;j++) document.getElementById("i"+j).value = myArray[j];
+        for(j=0;j<i;j++) {
+            document.getElementById("i"+j).value = myArrayI[j];
+            document.getElementById("how_many"+j).value = myArrayHowMany[j];
+        }
 
         document.getElementById("number").value = i;
 
@@ -44,11 +52,15 @@
                         {% csrf_token %}
                         <div class="form-group">
                             <label class="control-label col-sm-2">Name of dish</label>
-                            <input type="text" name="name" id="name" value="defautl"/>
+                            <input type="text" name="name" id="name"/>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-sm-2">Level</label>
-                            <input type="text" name="level"/>
+                            <input type="radio" name="level" value="easy" checked> Easy
+                            <input type="radio" name="level" value="average"> Average
+                            <input type="radio" name="level" value="medium"> Medium
+                            <input type="radio" name="level" value="difficult"> Difficult
+                            <input type="radio" name="level" value="demanding"> Demanding
                         </div>
                         <div class="form-group">
                             <label class="control-label col-sm-2">Link to photo</label>
@@ -67,6 +79,7 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-2">Ingredient 1</label>
                                 <input type="text" name="i0" id="i0"/>
+                                <input type="text" name="how_many0" id="how_many0"/>
                             </div>
                         </div>
                         <div>

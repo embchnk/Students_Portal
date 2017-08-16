@@ -33,18 +33,19 @@ def result_of_addition_recipe(request):
     u = get_user(request)
     if u is not None:
         if u.is_authenticated and request.POST['name'] and request.POST['i0'] and request.POST['instruction']:
-            profile = Profile.objects.first()
-            recipe = Recipe(author=profile, title=request.POST['name'], likes=0, instruction=request.POST['instruction'], level=request.POST['level'])
-            recipe.save()
-            for i in range(int(request.POST['number'])-1):
-                iter = 'i'+str(i)
+            profile = Profile.objects.get(user = u)
+            new_recipe = Recipe(author=profile, title=request.POST['name'], likes=0, instruction=request.POST['instruction'], level=request.POST['level'])
+            new_recipe.save()
+            for i in range(int(request.POST['number'])+1):
+                temp_i = 'i'+str(i)
+                temp_how_many = 'how_many'+str(i)
                 #now i check if ingredient is located in our database
-                if check_database(request.POST[iter]) is None:
-                    ingredient = Ingredient(name=request.POST[iter], how_many="a little")
+                if check_database(request.POST[temp_i]) is None:
+                    ingredient = Ingredient(name=request.POST[temp_i], how_many=request.POST[temp_how_many])
                     ingredient.save()
                 else:
                     ingredient = check_database(request.POST[iter])
-                ingredient.recipe.add(recipe)
+                ingredient.recipe.add(new_recipe)
             return render(request, 'recipes/recipe_form.html', {'result': 'True'})
         else:
             return render(request, 'recipes/recipe_form.html', {'result': 'False'})
@@ -53,6 +54,6 @@ def result_of_addition_recipe(request):
 
 def check_database(name_of):
     if Ingredient.objects.filter(name = name_of).exists():
-        return Ingredient.objects.filter(name = name_of)
+        return Ingredient.objects.get(name = name_of)
     else:
         return None
