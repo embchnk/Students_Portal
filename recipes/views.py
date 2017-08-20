@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 from .models import Recipe, Ingredient, Unit, Quantity
-=======
-from .models import Recipe, Ingredient, Unit
->>>>>>> 6eed1dd3d975cb5e432bc766fce481d26c641956
 from users.models import Profile, User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseNotFound
