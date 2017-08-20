@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 from .models import Recipe, Ingredient, Unit, Quantity
+=======
+from .models import Recipe, Ingredient, Unit
+>>>>>>> 6eed1dd3d975cb5e432bc766fce481d26c641956
 from users.models import Profile, User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseNotFound
@@ -25,6 +29,7 @@ def single_recipe(request, recipe_id):
     dict = {}
     for i in range(single_recipe.ingredient_set.count()):
         dict[single_recipe.ingredient_set.all()[i]] = str(single_recipe.unit_set.all()[i]) + " " + str(single_recipe.quantity_set.all()[i])
+
     return render(request, 'recipes/single_recipe.html', {'single_recipe': single_recipe, 'dict': dict})
 
 
