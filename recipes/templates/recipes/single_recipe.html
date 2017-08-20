@@ -1,5 +1,5 @@
 {% extends 'users/base.html' %}
-{% block title %}single_recipe.title{% endblock %}
+{% block title %}{{ single_recipe.title }}{% endblock %}
 
 {% block body %}
 
@@ -13,8 +13,8 @@
 
     <span> Ingredients</span>
     <ul>
-    {% for ingredients in single_recipe.ingredient_set.all %}
-        <li>{{ ingredients }}</li>
+    {% for element, value in dict.items %}
+        <li>{{ element }} - {{ value }}</li>
     {% endfor %}
     </ul>
     <span>Recipe</span>
