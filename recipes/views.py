@@ -82,9 +82,9 @@ def result_of_addition_recipe(request):
                     ingredient = Ingredient(name=request.POST[ingredient_index])
                     ingredient.save()
                 try:
-                    unit = Unit.objects.get(unit=request.POST['chosen_unit'])
+                    unit = Unit.objects.get(unit=request.POST[unit_index])
                 except Unit.DoesNotExist:
-                    unit = Unit(unit=request.POST['chosen_unit'])
+                    unit = Unit(unit=request.POST[unit_index])
                     unit.save()
                 try:
                     quantity = Quantity.objects.get(value=request.POST[quantity_index])
