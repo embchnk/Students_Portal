@@ -5,6 +5,7 @@ from django.http import HttpResponseNotFound, JsonResponse
 from django.contrib.auth import get_user
 from django.db.models import Q
 from django.core.exceptions import MultipleObjectsReturned
+from users.forms import LoginForm
 
 
 # Create your views here.
@@ -47,7 +48,7 @@ def new_recipe(request):
     if request.user is not None:
         if request.user.is_authenticated:
             return render(request, 'recipes/recipe_form.html', {'unit_class': Unit.objects.all()})
-        return HttpResponseNotFound('<h1>Page not found</h1>')
+        return render(request, 'users/login_form.html', {'form': LoginForm, 'LogInMsg': 'You need to log in to add recipe'})
 
 
 def favorite(request, recipe_id):
@@ -74,17 +75,28 @@ def result_of_addition_recipe(request):
             new_recipe.save()
             for i in range(int(request.POST['number']) + 1):
                 ingredient_index = "i" + str(i)
+<<<<<<< HEAD
                 unit_index = "unit" + str(i)
                 quantity_index = "quantity" + str(i)
+=======
+                unit_index = "how_many" + str(i)
+                chosen_unit = "chosen_unit" + str(i)
+>>>>>>> Add select box when there is more than one ingredient
                 try:
                     ingredient = Ingredient.objects.get(name=request.POST[ingredient_index])
                 except Ingredient.DoesNotExist:
                     ingredient = Ingredient(name=request.POST[ingredient_index])
                     ingredient.save()
                 try:
+<<<<<<< HEAD
                     unit = Unit.objects.get(unit=request.POST[unit_index])
                 except Unit.DoesNotExist:
                     unit = Unit(unit=request.POST[unit_index])
+=======
+                    unit = Unit.objects.get(unit=request.POST[chosen_unit])
+                except Unit.DoesNotExist:
+                    unit = Unit(unit=request.POST[chosen_unit])
+>>>>>>> Add select box when there is more than one ingredient
                     unit.save()
                 try:
                     quantity = Quantity.objects.get(value=request.POST[quantity_index])

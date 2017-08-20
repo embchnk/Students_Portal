@@ -65,7 +65,7 @@ def login_user_view(request):
         return redirect('users:index')
     else:
         messages.add_message(request, messages.ERROR, 'Invalid username or password')
-        return render(request, 'users/login_form.html', {'form': LoginForm})
+        return render(request, 'users/login_form.html', {'form': LoginForm, 'LogInMsg': "Log In Here"})
 
 
 class UserLoginFormView(View):
@@ -76,7 +76,7 @@ class UserLoginFormView(View):
 
     def get(self, request):
         form = self.form_class(None)
-        return render(request, self.template_name, {'form': form, 'login_status': True})
+        return render(request, self.template_name, {'form': form, 'login_status': True, 'LogInMsg': "Log In Here"})
 
     def post(self, request):
         form = self.form_class(request.POST)
