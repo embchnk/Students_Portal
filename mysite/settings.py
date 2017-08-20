@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     # when created new app and make model for it, put it here! Next step: $python manage.py makemigration {app_name}  |Then: $python manage.py migrate
+    'django_extensions',
     'users.apps.UsersConfig',
     'recipes.apps.RecipesConfig',
     'django.contrib.admin',
