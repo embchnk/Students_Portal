@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseNotFound
 from django.contrib.auth import get_user
 from django.db.models import Q
+from django.core.exceptions import MultipleObjectsReturned
 
 
 # Create your views here.
@@ -25,7 +26,15 @@ def single_recipe(request, recipe_id):
     dict = {}
     for i in range(single_recipe.ingredient_set.count()):
         ingredient = single_recipe.ingredient_set.all()[i]
-        dict[ingredient] = str(ingredient.quantity_set.filter(recipe=single_recipe).values_list('value', flat=True).get()) + " " + str(ingredient.unit_set.filter(recipe=single_recipe).values_list('unit', flat=True).get())
+        try:
+            temp_quantity = Quantity.objects.filter(recipe=single_recipe, ingredient=ingredient).values_list('value', flat=True).get()
+        except MultipleObjectsReturned:
+            temp_quantity = Quantity.objects.filter(recipe=single_recipe, ingredient=ingredient).values_list('value', flat=True)[0]
+        try:
+            temp_unit = Unit.objects.filter(recipe=single_recipe, ingredient=ingredient).values_list('unit', flat=True).get()
+        except MultipleObjectsReturned:
+            temp_unit = Unit.objects.filter(recipe=single_recipe, ingredient=ingredient).values_list('unit', flat=True)[0]
+        dict[ingredient] = str(temp_quantity) + " " + str(temp_unit)
 
     return render(request, 'recipes/single_recipe.html', {'single_recipe': single_recipe, 'dict': dict})
 
@@ -58,7 +67,7 @@ def result_of_addition_recipe(request):
                     unit = Unit(unit="grams")
                     unit.save()
                 try:
-                    quantity = Quantity.objects.get(Q(value=request.POST[unit_index]))
+                    quantity = Quantity.objects.get(value=request.POST[unit_index])
                 except Quantity.DoesNotExist:
                     quantity = Quantity(value=request.POST[unit_index])
                     quantity.save()
