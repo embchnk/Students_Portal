@@ -56,15 +56,16 @@ def result_of_addition_recipe(request):
             for i in range(int(request.POST['number']) + 1):
                 ingredient_index = "i" + str(i)
                 unit_index = "how_many" + str(i)
+                chosen_unit = "chosen_unit" + str(i)
                 try:
                     ingredient = Ingredient.objects.get(name=request.POST[ingredient_index])
                 except Ingredient.DoesNotExist:
                     ingredient = Ingredient(name=request.POST[ingredient_index])
                     ingredient.save()
                 try:
-                    unit = Unit.objects.get(unit=request.POST['chosen_unit'])
+                    unit = Unit.objects.get(unit=request.POST[chosen_unit])
                 except Unit.DoesNotExist:
-                    unit = Unit(unit=request.POST['chosen_unit'])
+                    unit = Unit(unit=request.POST[chosen_unit])
                     unit.save()
                 try:
                     quantity = Quantity.objects.get(value=request.POST[unit_index])

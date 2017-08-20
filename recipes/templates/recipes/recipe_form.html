@@ -8,9 +8,11 @@
     {
         var myArrayI=[];
         var myArrayHowMany=[];
+        var myArrayChosenUnit = [];
         for(var j=0;j<i+1;j++) {
             myArrayI.push(document.getElementById("i" + j).value);
             myArrayHowMany.push(document.getElementById("how_many" + j).value);
+            myArrayChosenUnit.push(document.getElementById("chosen_unit" + j).value);
         }
         
         i++;
@@ -18,11 +20,17 @@
             '<label class="control-label col-sm-2">Ingredient '+(i+1)+'</label> ' +
             '<input type="text" name="i'+i+'" id="i'+i+'"/> ' +
             '<input type="text" name="how_many'+i+'" id="how_many'+i+'"/>'+
+            '<select name="chosen_unit' + i + '" id="chosen_unit' + i +'">' +
+                '{% for unit in unit_class %}' +
+                    '<option value={{ unit }}>{{ unit }}</option>' +
+                '{% endfor %}' +
+            '</select>' +
             '</div>';
 
         for(j=0;j<i;j++) {
             document.getElementById("i"+j).value = myArrayI[j];
             document.getElementById("how_many"+j).value = myArrayHowMany[j];
+            document.getElementById("chosen_unit" + j).value = myArrayChosenUnit[j];
         }
 
         document.getElementById("number").value = i;
@@ -80,7 +88,7 @@
                                 <label class="control-label col-sm-2">Ingredient 1</label>
                                 <input type="text" name="i0" id="i0"/>
                                 <input type="text" name="how_many0" id="how_many0"/>
-                                <select name="chosen_unit">
+                                <select name="chosen_unit0" id="chosen_unit0">
                                     {% for unit in unit_class %}
                                         <option value={{ unit }}>{{ unit }}</option>
                                     {% endfor %}
