@@ -1,15 +1,14 @@
 {% extends 'users/base.html' %}
 {% block title %}Add recipe{% endblock %}
 
-{% block body %}
-    <script type="text/javascript">
+<script type="text/javascript">
     var i=0;
     content = '<tr>\n' +
             '<div class="form-group">' +
             '<td><label class="control-label col-sm-3">Ingredient_1 </label></td>' +
             '<td><input type="text" name="i0" id="i0"/></td>' +
-            '<td><input type="text" name="unit0" id="unit0"/></td>' +
             '<td><input type="text" name="quantity0" id="quantity0"/></td>' +
+            '<td><input type="text" name="unit0" id="unit0"/></td>' +
             '</div>' +
             '</tr>';
     window.onload = setTableOfIngredients;
@@ -20,8 +19,8 @@
             '                            <tr>\n' +
             '                                <th></th>\n' +
             '                                <th>Name</th>\n' +
-            '                                <th>Unit</th>\n' +
             '                                <th>Quantity</th>\n' +
+            '                                <th>Unit</th>\n' +
             '                            </tr>\n' +
             '                        </thead>\n' +
             '                        <tbody>'+content+'</tbody>\n' +
@@ -34,10 +33,10 @@
         var myArrayQuantity=[];
         for(var j=0;j<i+1;j++) {
             myArrayI.push(document.getElementById("i" + j).value);
-            myArrayUnit.push(document.getElementById("unit" + j).value);
             myArrayQuantity.push(document.getElementById("quantity" + j).value);
+            myArrayUnit.push(document.getElementById("unit" + j).value);
         }
-        
+
         i++;
 
 
@@ -45,8 +44,8 @@
         '<div class="form-group">' +
         '<td><label class="control-label col-sm-3">Ingredient_'+(i+1)+'</label></td>' +
         '<td><input type="text" name="i'+i+'" id="i'+i+'"/></td>' +
-        '<td><input type="text" name="unit'+i+'" id="unit'+i+'"/></td>' +
         '<td><input type="text"name="quantity'+i+'" id="quantity'+i+'"/></td>' +
+        '<td><input type="text" name="unit'+i+'" id="unit'+i+'"/></td>' +
         '</div>' +
         '</tr>';
 
@@ -54,14 +53,15 @@
 
         for(j=0;j<i;j++) {
             document.getElementById("i"+j).value = myArrayI[j];
-            document.getElementById("unit"+j).value = myArrayUnit[j];
             document.getElementById("quantity"+j).value = myArrayQuantity[j];
+            document.getElementById("unit"+j).value = myArrayUnit[j];
         }
 
         document.getElementById("number").value = i;
 
     }
     </script>
+{% block body %}
 
     <!-- I check if result was succesfull or abortive-->
     {% if result %}
@@ -110,16 +110,16 @@
                             <input type="hidden" id = "number" name="number" value="0" readonly>
                         </div>
                         <div id="addition">
-
-                        <tr>
-                                <div class="form-group">
-                                    <td><label class="control-label col-sm-3">Ingredient 1</label></td>
-                                    <td><input type="text" name="i0" id="i0"/></td>
-                                    <td><input type="text" name="unit0" id="unit0"/></td>
-                                    <td><input type="text" name="quantity0" id="quantity0"/></td>
-                                </div>
-                            </tr>
-
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">Ingredient 1</label>
+                                <input type="text" name="i0" id="i0"/>
+                                <input type="text" name="how_many0" id="how_many0"/>
+                                <select name="chosen_unit">
+                                    {% for unit in unit_class %}
+                                        <option value={{ unit }}>{{ unit }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
                         </div>
                         <div>
                             <button type="button" class="btn btn-success" onclick="add_ingredient()">+</button>

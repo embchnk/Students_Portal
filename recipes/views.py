@@ -46,7 +46,7 @@ def single_recipe(request, recipe_id):
 def new_recipe(request):
     if request.user is not None:
         if request.user.is_authenticated:
-            return render(request, 'recipes/recipe_form.html')
+            return render(request, 'recipes/recipe_form.html', {'unit_class': Unit.objects.all()})
         return HttpResponseNotFound('<h1>Page not found</h1>')
 
 
@@ -82,9 +82,9 @@ def result_of_addition_recipe(request):
                     ingredient = Ingredient(name=request.POST[ingredient_index])
                     ingredient.save()
                 try:
-                    unit = Unit.objects.get(unit=request.POST[unit_index])
+                    unit = Unit.objects.get(unit=request.POST['chosen_unit'])
                 except Unit.DoesNotExist:
-                    unit = Unit(unit=request.POST[unit_index])
+                    unit = Unit(unit=request.POST['chosen_unit'])
                     unit.save()
                 try:
                     quantity = Quantity.objects.get(value=request.POST[quantity_index])
@@ -96,8 +96,8 @@ def result_of_addition_recipe(request):
                 unit.ingredient.add(ingredient)
                 quantity.recipe.add(new_recipe)
                 quantity.ingredient.add(ingredient)
-            return render(request, 'recipes/recipe_form.html', {'result': 'True'})
+            return render(request, 'recipes/recipe_form.html', {'result': 'True', 'unit_class': Unit.objects.all()})
         else:
-            return render(request, 'recipes/recipe_form.html', {'result': 'False'})
+            return render(request, 'recipes/recipe_form.html', {'result': 'False', 'unit_class': Unit.objects.all()})
     else:
         return redirect('users:index')
