@@ -17,15 +17,17 @@ class Recipe(models.Model):
 class Ingredient(models.Model):
     name = models.CharField(max_length=100)
     recipe = models.ManyToManyField(Recipe)
-    how_many = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name+' - '+self.how_many
-
-
-class Quantity(models.Model):
-    unit = models.CharField(max_length=100)
-    ingredient = models.ManyToManyField(Ingredient)
 
     def __str__(self):
         return self.name
+
+
+class Unit(models.Model):
+    unit = models.CharField(max_length=100)
+    value = models.IntegerField()
+    recipe = models.ManyToManyField(Recipe)
+
+    def __str__(self):
+        return str(self.value) + " " + self.unit
+
+
