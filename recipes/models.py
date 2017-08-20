@@ -16,7 +16,7 @@ class Recipe(models.Model):
 
 class Ingredient(models.Model):
     name = models.CharField(max_length=100)
-    recipe = models.ManyToManyField(Recipe)
+    recipe = models.ManyToManyField(Recipe, blank=True)
 
     def __str__(self):
         return self.name
@@ -24,8 +24,8 @@ class Ingredient(models.Model):
 
 class Unit(models.Model):
     unit = models.CharField(max_length=100)
-    recipe = models.ManyToManyField(Recipe)
-    ingredient = models.ManyToManyField(Ingredient)
+    recipe = models.ManyToManyField(Recipe, blank=True)
+    ingredient = models.ManyToManyField(Ingredient, blank=True)
 
     def __str__(self):
         return self.unit
@@ -33,8 +33,8 @@ class Unit(models.Model):
 
 class Quantity(models.Model):
     value = models.IntegerField()
-    recipe = models.ManyToManyField(Recipe)
-    ingredient = models.ManyToManyField(Ingredient)
+    recipe = models.ManyToManyField(Recipe, blank=True)
+    ingredient = models.ManyToManyField(Ingredient, blank=True)
 
     def __str__(self):
         return str(self.value)
