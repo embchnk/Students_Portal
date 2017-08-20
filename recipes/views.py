@@ -24,7 +24,8 @@ def single_recipe(request, recipe_id):
     single_recipe = get_object_or_404(Recipe, pk=recipe_id)
     dict = {}
     for i in range(single_recipe.ingredient_set.count()):
-        dict[single_recipe.ingredient_set.all()[i]] = str(single_recipe.unit_set.all()[i]) + " " + str(single_recipe.quantity_set.all()[i])
+        ingredient = single_recipe.ingredient_set.all()[i]
+        dict[ingredient] = str(ingredient.quantity_set.filter(recipe=single_recipe).values_list('value', flat=True).get()) + " " + str(ingredient.unit_set.filter(recipe=single_recipe).values_list('unit', flat=True).get())
 
     return render(request, 'recipes/single_recipe.html', {'single_recipe': single_recipe, 'dict': dict})
 
@@ -47,7 +48,7 @@ def result_of_addition_recipe(request):
                 ingredient_index = "i" + str(i)
                 unit_index = "how_many" + str(i)
                 try:
-                    ingredient = Ingredient.objects.get(Q(name=ingredient_index))
+                    ingredient = Ingredient.objects.get(name=request.POST[ingredient_index])
                 except Ingredient.DoesNotExist:
                     ingredient = Ingredient(name=request.POST[ingredient_index])
                     ingredient.save()
