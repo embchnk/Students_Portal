@@ -4,25 +4,58 @@
 {% block body %}
     <script type="text/javascript">
     var i=0;
+    content = '<tr>\n' +
+            '<div class="form-group">' +
+            '<td><label class="control-label col-sm-3">Ingredient_1 </label></td>' +
+            '<td><input type="text" name="i0" id="i0"/></td>' +
+            '<td><input type="text" name="unit0" id="unit0"/></td>' +
+            '<td><input type="text" name="quantity0" id="quantity0"/></td>' +
+            '</div>' +
+            '</tr>';
+    window.onload = setTableOfIngredients;
+    function setTableOfIngredients()
+    {
+        document.getElementById("addition").innerHTML ='<table class="table">\n' +
+            '                        <thead>\n' +
+            '                            <tr>\n' +
+            '                                <th></th>\n' +
+            '                                <th>Name</th>\n' +
+            '                                <th>Unit</th>\n' +
+            '                                <th>Quantity</th>\n' +
+            '                            </tr>\n' +
+            '                        </thead>\n' +
+            '                        <tbody>'+content+'</tbody>\n' +
+            '                        </table>';
+    }
     function add_ingredient()
     {
         var myArrayI=[];
-        var myArrayHowMany=[];
+        var myArrayUnit=[];
+        var myArrayQuantity=[];
         for(var j=0;j<i+1;j++) {
             myArrayI.push(document.getElementById("i" + j).value);
-            myArrayHowMany.push(document.getElementById("how_many" + j).value);
+            myArrayUnit.push(document.getElementById("unit" + j).value);
+            myArrayQuantity.push(document.getElementById("quantity" + j).value);
         }
         
         i++;
-        document.getElementById("addition").innerHTML +='<div class="form-group"> ' +
-            '<label class="control-label col-sm-2">Ingredient '+(i+1)+'</label> ' +
-            '<input type="text" name="i'+i+'" id="i'+i+'"/> ' +
-            '<input type="text" name="how_many'+i+'" id="how_many'+i+'"/>'+
-            '</div>';
+
+
+            content+='<tr>' +
+        '<div class="form-group">' +
+        '<td><label class="control-label col-sm-3">Ingredient_'+(i+1)+'</label></td>' +
+        '<td><input type="text" name="i'+i+'" id="i'+i+'"/></td>' +
+        '<td><input type="text" name="unit'+i+'" id="unit'+i+'"/></td>' +
+        '<td><input type="text"name="quantity'+i+'" id="quantity'+i+'"/></td>' +
+        '</div>' +
+        '</tr>';
+
+        setTableOfIngredients();
 
         for(j=0;j<i;j++) {
             document.getElementById("i"+j).value = myArrayI[j];
-            document.getElementById("how_many"+j).value = myArrayHowMany[j];
+            document.getElementById("unit"+j).value = myArrayUnit[j];
+            document.getElementById("quantity"+j).value = myArrayQuantity[j];
         }
 
         document.getElementById("number").value = i;
@@ -47,15 +80,15 @@
             <div class="panel panel-success">
                 <div class="panel-body">
                     <h2>Add your recipe here</h2>
-                    <form class="form-horizontal" action="{% url 'recipes:result_of_addition_recipe' %}" method="post" enctype="multipart/form-data">
+                    <form class="form-horizontal" action="{% url 'recipes:result_of_addition_recipe' %}" method="post" enctype="multipart/form-data" id="form">
                         <!--it is for security purposes-->
                         {% csrf_token %}
                         <div class="form-group">
-                            <label class="control-label col-sm-2">Name of dish</label>
+                            <label class="control-label col-sm-3">Name of dish</label>
                             <input type="text" name="name" id="name"/>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2">Level</label>
+                            <label class="control-label col-sm-3">Level</label>
                             <input type="radio" name="level" value="easy" checked> Easy
                             <input type="radio" name="level" value="average"> Average
                             <input type="radio" name="level" value="medium"> Medium
@@ -63,28 +96,35 @@
                             <input type="radio" name="level" value="demanding"> Demanding
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2">Link to photo</label>
+                            <label class="control-label col-sm-3">Link to photo</label>
                             <input type="text" name="dish_photo"/>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2">Recipe</label>
-                            <input type="text" name="instruction" class="col-sm-12 col-md-7">
+                          <label class="control-label col-sm-3" for="instruction">Recipe:</label>
+                            <div class="col-md-8">
+                                <textarea name ="instruction" style="resize:vertical;overflow: auto;" class="form-control" rows="5" id="instruction"></textarea>
+                            </div>
                         </div>
                         <!-- my fields for ingredients-->
                         <div class="form-group">
-                            <label class="control-label col-sm-2">Number of ingredients</label>
-                            <input type="number" id = "number" name="number" value="0" readonly>
+                            <input type="hidden" id = "number" name="number" value="0" readonly>
                         </div>
                         <div id="addition">
-                            <div class="form-group">
-                                <label class="control-label col-sm-2">Ingredient 1</label>
-                                <input type="text" name="i0" id="i0"/>
-                                <input type="text" name="how_many0" id="how_many0"/>
-                            </div>
+
+                        <tr>
+                                <div class="form-group">
+                                    <td><label class="control-label col-sm-3">Ingredient 1</label></td>
+                                    <td><input type="text" name="i0" id="i0"/></td>
+                                    <td><input type="text" name="unit0" id="unit0"/></td>
+                                    <td><input type="text" name="quantity0" id="quantity0"/></td>
+                                </div>
+                            </tr>
+
                         </div>
                         <div>
                             <button type="button" class="btn btn-success" onclick="add_ingredient()">+</button>
                         </div>
+
                         <!-- end-->
 
                         <div class="form-group">
@@ -92,8 +132,6 @@
                                 <input type="submit" class="btn btn-success" value="Submit" />
                             </div>
                         </div>
-                        <p id="test">
-                        </p>
                     </form>
 
                 </div>

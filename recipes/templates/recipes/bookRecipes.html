@@ -2,30 +2,59 @@
 {% block title %}Recipes{% endblock %}
 
 {% block body %}
-<div class="container-fluid">
-    <div class="row">
+        {% load staticfiles %}
+    <!--bootstrap, fonts from google -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
+    <link href="{% static 'recipes/style.css' %}" rel="stylesheet">
 
-        <div class="col-sm-12 col-md-7">
-            <div class="panel panel-success">
+
+ <div class="row">
+
+        <div class="col-sm-12">
+
+            <div class="panel panel-default">
                 <div class="panel-body">
-                    <h2>Recipes</h2>
-                        {% if all_recipes  %}
-                        <ul class="form-group">
-                           {% for recipe in all_recipes %}
-                               <li>
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                        <a class="text-danger small" href="{% url 'recipes:single_recipe' recipe.id%}">{{ recipe.title }} </a>
-                                    </div>
-                               </li>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Dish Title</th>
+                                <th>Author</th>
+                                <th>Recipe</th>
+                                <th>Level</th>
+                                <th>Likes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for recipe in all_recipes %}
+                                <tr>
+                                    <td>{{ recipe.title }}</td>
+                                    <td>{{ recipe.author.user.first_name }}</td>
+                                    <td>
+                                        <a href="{% url 'recipes:single_recipe' recipe.id%}">
+                                            <button type="button" class="btn btn-primary btn-xs">
+                                                <span class="glyphicon glyphicon-cutlery"></span>&nbsp; Check recipe
+                                            </button>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <!-- for every level I use different label class -->
+                                        {% if recipe.level == "easy" %}<span class="label label-success">Easy</span>
+                                        {% elif recipe.level == "average"%}<span class="label label-info">Average</span>
+                                        {% elif recipe.level == "medium"%}<span class="label label-primary">Medium</span>
+                                        {% elif recipe.level == "difficult"%}<span class="label label-warning">Difficult</span>
+                                        {% else %}<span class="label label-danger">Demanding</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <span class="badge">{{ recipe.likes }}</span>
+                                    </td>
+                                </tr>
                             {% endfor %}
-                        </ul>
-                        {% else %}
-                            <h3>Pusto jest</h3>
-                        {% endif %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </div>
-
     </div>
 </div>
 {% endblock %}
