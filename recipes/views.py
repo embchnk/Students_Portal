@@ -48,6 +48,7 @@ def new_recipe(request):
     if request.user is not None:
         if request.user.is_authenticated:
             return render(request, 'recipes/recipe_form.html', {'unit_class': Unit.objects.all()})
+<<<<<<< HEAD
         return render(request, 'users/login_form.html', {'form': LoginForm, 'LogInMsg': 'You need to log in to add recipe'})
 
 
@@ -63,6 +64,9 @@ def favorite(request, recipe_id):
         return JsonResponse({'success': False})
     else:
         return JsonResponse({'success': True})
+=======
+        return HttpResponseNotFound('<h1>Page not found</h1>')
+>>>>>>> dbd84c9ee87a9ad7853eed062da77fe780410e36
 
 
 def result_of_addition_recipe(request):
