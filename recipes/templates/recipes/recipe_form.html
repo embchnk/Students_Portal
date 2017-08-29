@@ -1,6 +1,7 @@
 {% extends 'users/base.html' %}
 {% block title %}Add recipe{% endblock %}
 
+{% block body %}
 <script type="text/javascript">
     var i=0;
     content = '<tr>\n' +
@@ -8,7 +9,11 @@
             '<td><label class="control-label col-sm-3">Ingredient_1 </label></td>' +
             '<td><input type="text" name="i0" id="i0"/></td>' +
             '<td><input type="text" name="quantity0" id="quantity0"/></td>' +
-            '<td><input type="text" name="unit0" id="unit0"/></td>' +
+            '<td><select name="unit0" id="unit0">' +
+            '{% for unit in unit_class %}' +
+                '<option value={{ unit }}>{{ unit }}</option>' +
+            '{% endfor %}' +
+            '</select></td>' +
             '</div>' +
             '</tr>';
     window.onload = setTableOfIngredients;
@@ -44,8 +49,12 @@
         '<div class="form-group">' +
         '<td><label class="control-label col-sm-3">Ingredient_'+(i+1)+'</label></td>' +
         '<td><input type="text" name="i'+i+'" id="i'+i+'"/></td>' +
-        '<td><input type="text"name="quantity'+i+'" id="quantity'+i+'"/></td>' +
-        '<td><input type="text" name="unit'+i+'" id="unit'+i+'"/></td>' +
+        '<td><input type="text" name="quantity'+i+'" id="quantity'+i+'"/></td>' +
+        '<td><select name="unit'+i+'" id="unit'+i+'">' +
+            '{% for unit in unit_class %}' +
+                '<option value={{ unit }}>{{ unit }}</option>' +
+            '{% endfor %}' +
+        '</select></td>' +
         '</div>' +
         '</tr>';
 
@@ -61,16 +70,15 @@
 
     }
     </script>
-{% block body %}
 
-    <!-- I check if result was succesfull or abortive-->
-    {% if result %}
-        {% if result == 'True' %}
-            <h3 style="color: green;">Recipe is added</h3>
-        {% else %}
-            <h3 style="color: red;">Could't add item</h3>
-        {% endif %}
-    {% endif %}
+<!-- I check if result was succesfull or abortive-->
+{% if result %}
+{% if result == 'True' %}
+<h3 style="color: green;">Recipe is added</h3>
+{% else %}
+<h3 style="color: red;">Could't add item</h3>
+{% endif %}
+{% endif %}
 
 
 <div class="container-fluid">
@@ -113,8 +121,8 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-2">Ingredient 1</label>
                                 <input type="text" name="i0" id="i0"/>
-                                <input type="text" name="how_many0" id="how_many0"/>
-                                <select name="chosen_unit0" id="chosen_unit0">
+                                <input type="text" name="quantity0" id="quantity0"/>
+                                <select name="unit0" id="unit0">
                                     {% for unit in unit_class %}
                                         <option value={{ unit }}>{{ unit }}</option>
                                     {% endfor %}
