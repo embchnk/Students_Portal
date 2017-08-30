@@ -1,26 +1,63 @@
 {% extends 'users/base.html' %}
 {% block title %}{{ single_recipe.title }}{% endblock %}
-
+<style>
+    span
+    {
+        font-size: 50px !important;
+        width:1000px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
 {% block body %}
 
-    <div class="panel-group">
-        <!--it is photo for dish-->
-        <div class="panel panel-default">
-            {% if single_recipe %}
-                <img src="{{ single_recipe.dish_photo}}"/><br>
-            {% endif %}
-            <!-- photo end -->
-            <span style="font-size: 20px"><kbd> List of necessaries ingredients</kbd></span>
-            <ul>
+    <div class="jumbotron">
+      <div class="container">
+
+        <div class="col-md-5">
+            <h1 style="color:#1D0D57; font-family: 'Droid Sans'" class="display-3">{{single_recipe.title}}</h1>
+            <!--first line in description-->
+            <span style="font-size: 20px;font-weight: 600;">Author</span><span class="quantity pull-right" style="font-size: 20px;font-style: italic">{{ single_recipe.author.user.first_name }}</span><br><br>
+            <!--second line in description-->
+            <span style="font-size: 20px;font-weight: 600;">Level</span>
+            <div class="quantity pull-right">
+                {% if single_recipe.level == "easy" %}<span style="font-size: 20px;" class="label label-success">Easy</span>
+                {% elif single_recipe.level == "average"%}<span style="font-size: 20px;" class="label label-info">Average</span>
+                {% elif single_recipe.level == "medium"%}<span style="font-size: 20px;" class="label label-primary">Medium</span>
+                {% elif single_recipe.level == "difficult"%}<span style="font-size: 20px;" class="label label-warning" >Difficult</span>
+                {% else %}<span class="label label-danger" style="font-size: 20px;">Demanding</span>
+                {% endif %}
+            </div><br><br>
+            <!--third line in description-->
+        <span style="font-size: 20px;font-weight: 600;">Likes</span><span class="quantity pull-right badge" style="font-size: 20px;">{{ single_recipe.likes }}</span><br><br>
+        </div>
+          <div class="col-md-4">
+              <img src="{{ single_recipe.dish_photo }}" onerror="this.src='../../../media/imagedawid'" height="200" width="200" class="quantity pull-right"/><br>
+          </div>
+      </div>
+    </div>
+    <div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+          <h2>Ingredients</h2>
+        <div class="panel panel-default col-md-5">
+          <ul class="list-group">
             {% for element, value in dict.items %}
-                <li style="font-style: italic; font-size: 17px;">{{ element }} - {{ value }}</li>
+                <li class="list-group-item"><span style="font-weight: 500;color: green;text-transform: uppercase">{{ element }}</span><span class="quantity pull-right" style="font-weight: 600;">{{ value }}</span></li>
             {% endfor %}
             </ul>
-            <h2>Recipe</h2>
+          <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
         </div>
-        <div class="panel panel-body">
-            <blockquote>{{ single_recipe.instruction }}</blockquote>
-        </div>
-    </div>
+        <div class="col-md-6">
+            <p><blockquote>{{ single_recipe.instruction }}</blockquote></p>
+       </div>
+      </div>
+
+      <hr>
+
+      <footer>
+        <p>&copy; Jest Super 2017</p>
+      </footer>
+    </div> <!-- /container -->
 
 {% endblock %}
