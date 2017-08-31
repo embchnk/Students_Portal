@@ -1,0 +1,7 @@
+{% if results %}
+    {% for result in results %}
+        <li>{{ result.title }}</li>
+    {% endfor %}
+{% else %}
+    <h2>There is not any recipe containing these words</h2>
+{% endif %}

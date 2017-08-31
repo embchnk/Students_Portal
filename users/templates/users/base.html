@@ -40,7 +40,7 @@
                 </li>
             </ul>
             <!--Todo: action-->
-            <form class="navbar-form navbar-left" role="search" method="get" action="#">
+            <form class="navbar-form navbar-left" role="search" method="get" action="{% url 'search_recipe:recipe_search' %}">
                 <div class="form-group">
                     <!-- q - variable for user input -->
                     <input type="text" class="form-control" name="q" value="">
