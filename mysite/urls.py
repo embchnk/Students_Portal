@@ -8,6 +8,7 @@ urlpatterns = [
     # when user request anything that starts with users - go to users.urls to find out what to do
     url(r'^users/', include('users.urls', namespace="users")),
     url(r'^recipes/', include('recipes.urls', namespace="recipes")),
+    url(r'^search/', include('search.urls')),
     #url(r'^users/', include('users.urls')),
 ]
 

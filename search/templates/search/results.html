@@ -1,0 +1,15 @@
+{% extends 'users/base.html' %}
+{% block title %}Search results{% endblock %}
+
+
+{% block body %}
+
+{% if results %}
+    {% for result in results %}
+        <li><a href="/recipes/bookRecipes/{{ result.id }}">{{ result }}</a></li>
+    {% endfor %}
+{% else %}
+    <h2>There is not any recipe containing these words</h2>
+{% endif %}
+
+{% endblock %}
