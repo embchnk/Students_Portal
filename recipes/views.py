@@ -23,11 +23,17 @@ def single_recipe(request, recipe_id):
     #    single_recipe = Recipe.objects.get(pk=recipe_id)
     # except Recipe.DoesNotExist:
     #    raise Http404
-    u = get_user(request)
     single_recipe = get_object_or_404(Recipe, pk=recipe_id)
     thumb_is_up = False
-    if single_recipe.likes.filter(user=u).count():
-        thumb_is_up= True
+
+    try:
+        u = get_user(request)
+        if single_recipe.likes.filter(user=u).count():
+            thumb_is_up= True
+    except:
+        # this line of code is unnecessary but I must write except
+        thumb_is_up = False
+
     dict = {}
     for i in range(single_recipe.ingredient_set.count()):
         ingredient = single_recipe.ingredient_set.all()[i]
@@ -50,12 +56,16 @@ def single_recipe(request, recipe_id):
 
 def likes(request, recipe_id):
     recipe = get_object_or_404(Recipe, pk=recipe_id)
-    u = get_user(request)
-    if recipe.likes.filter(user=u).count():
-        recipe.likes.remove(Profile.objects.get(user=u))
-    else:
-        recipe.likes.add(Profile.objects.get(user=u))
-        recipe.save()
+    try:
+        u = get_user(request)
+        if recipe.likes.filter(user=u).count():
+            recipe.likes.remove(Profile.objects.get(user=u))
+        else:
+            recipe.likes.add(Profile.objects.get(user=u))
+            recipe.save()
+    except:
+        #I must complete content of except
+        u='something'
     return single_recipe(request, recipe_id)
 
 
