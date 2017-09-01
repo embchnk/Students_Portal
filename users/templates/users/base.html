@@ -23,13 +23,17 @@
       select: function (event, ui) { //item selected
         AutoCompleteSelectHandler(event, ui)
       },
-      minLength: 2,
+      minLength: 1,
     });
   });
 
   function AutoCompleteSelectHandler(event, ui)
   {
-    var selectedObj = ui.item;
+   if(ui.item){
+            $(event.target).val(ui.item.value);
+        }
+        //submit the form
+        $(event.target.form).submit();
   }
 
     </script>
