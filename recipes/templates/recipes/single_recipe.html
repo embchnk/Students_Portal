@@ -15,7 +15,7 @@
       <div class="container">
 
         <div class="col-md-5">
-            <h1 style="color:#1D0D57; font-family: 'Droid Sans'" class="display-3">{{single_recipe.title}}</h1>
+            <h1 class="display-3"><span style="color:#1D0D57; font-family: 'Droid Sans'" >{{single_recipe.title}}</span>{% if user %}<a  href="{% url 'recipes:likes' single_recipe.id%}" class="btn-favorite"><span class="quantity pull-right glyphicon glyphicon-thumbs-{% if thumb_is_up %}down{% else %}up{% endif %}"></span></a>{% endif %}</h1>
             <!--first line in description-->
             <span style="font-size: 20px;font-weight: 600;">Author</span><span class="quantity pull-right" style="font-size: 20px;font-style: italic">{{ single_recipe.author.user.first_name }}</span><br><br>
             <!--second line in description-->
@@ -29,11 +29,12 @@
                 {% endif %}
             </div><br><br>
             <!--third line in description-->
-        <span style="font-size: 20px;font-weight: 600;">Likes</span><span class="quantity pull-right badge" style="font-size: 20px;">{{ single_recipe.likes }}</span><br><br>
+        <span style="font-size: 20px;font-weight: 600;">Likes</span><span class="quantity pull-right badge" style="font-size: 20px;">{{ single_recipe.likes.count }}</span><br><br>
         </div>
           <div class="col-md-4">
-              <img src="{{ single_recipe.dish_photo }}" onerror="this.src='../../../media/imagedawid'" height="200" width="200" class="quantity pull-right"/><br>
+              <img src="{{ single_recipe.dish_photo }}" onerror="this.src='../../../../media/imagedawid'" height="200" width="200" class="quantity pull-right"/><br>
           </div>
+
       </div>
     </div>
     <div class="container">
@@ -46,8 +47,8 @@
                 <li class="list-group-item"><span style="font-weight: 500;color: green;text-transform: uppercase">{{ element }}</span><span class="quantity pull-right" style="font-weight: 600;">{{ value }}</span></li>
             {% endfor %}
             </ul>
-          <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
         </div>
+
         <div class="col-md-6">
             <p><blockquote>{{ single_recipe.instruction }}</blockquote></p>
        </div>
