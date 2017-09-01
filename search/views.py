@@ -17,6 +17,7 @@ def recipe_search(request):
         return render(request, 'search/results.html', {'results': None})
 
 
+
 def get_recipes(request):
     if request.is_ajax():
         q = request.GET.get('term', '')
@@ -31,3 +32,4 @@ def get_recipes(request):
         data = 'fail'
     mimetype = 'application/json'
     return HttpResponse(data, mimetype)
+
