@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from recipes.models import Recipe
+from recipes.views import single_recipe
 from django.http import HttpResponseRedirect, HttpResponse
 import json
 
@@ -11,11 +12,11 @@ def recipe_search(request):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     if q is not None:
         results = Recipe.objects.filter(title__contains=q)
-
+        if results.count() == 1:
+            return single_recipe(request, results.values_list('id', flat=True))
         return render(request, 'search/results.html', {'results': results})
     else:
         return render(request, 'search/results.html', {'results': None})
-
 
 
 def get_recipes(request):
