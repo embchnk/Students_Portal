@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from recipes.models import Recipe
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+import json
 
 
 def recipe_search(request):
@@ -15,3 +16,18 @@ def recipe_search(request):
     else:
         return render(request, 'search/results.html', {'results': None})
 
+
+def get_recipes(request):
+    if request.is_ajax():
+        q = request.GET.get('term', '')
+        recipes = Recipe.objects.filter(title__icontains=q)
+        results = []
+        for recipe in recipes:
+            place_json = {}
+            place_json = recipe.title
+            results.append(place_json)
+        data = json.dumps(results)
+    else:
+        data = 'fail'
+    mimetype = 'application/json'
+    return HttpResponse(data, mimetype)

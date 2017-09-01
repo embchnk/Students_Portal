@@ -69,20 +69,19 @@ def likes(request, recipe_id):
     return single_recipe(request, recipe_id)
 
 
-
-
 def new_recipe(request):
     if request.user is not None:
         if request.user.is_authenticated:
             return render(request, 'recipes/recipe_form.html', {'unit_class': Unit.objects.all()})
         return render(request, 'users/login_form.html', {'form': LoginForm, 'LogInMsg': 'You need to log in to add recipe'})
 
+
 def result_of_addition_recipe(request):
     u = get_user(request)
     if u is not None:
         if u.is_authenticated and request.POST['name'] and request.POST['i0'] and request.POST['instruction']:
             profile = Profile.objects.get(user=u)
-            new_recipe = Recipe(author=profile, title=request.POST['name'], likes=0,
+            new_recipe = Recipe(author=profile, title=request.POST['name'],
                                 instruction=request.POST['instruction'], level=request.POST['level'])
             new_recipe.save()
             for i in range(int(request.POST['number']) + 1):

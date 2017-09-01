@@ -8,10 +8,36 @@
     {% load staticfiles %}
     <!--bootstrap, fonts from google -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
     <link href="{% static 'users/style.css' %}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <script>
+
+  $(function() {
+    $("#recipes").autocomplete({
+      source: "/search/get_recipes/",
+      select: function (event, ui) { //item selected
+        AutoCompleteSelectHandler(event, ui)
+      },
+      minLength: 2,
+    });
+  });
+
+  function AutoCompleteSelectHandler(event, ui)
+  {
+    var selectedObj = ui.item;
+  }
+
+    </script>
+
+
+
+
+
 </head>
 <body>
     <nav class="navbar navbar-inverse">
@@ -43,7 +69,7 @@
             <form class="navbar-form navbar-left" role="search" method="get" action="{% url 'search_recipe:recipe_search' %}">
                 <div class="form-group">
                     <!-- q - variable for user input -->
-                    <input type="text" class="form-control" name="q" value="">
+                    <input type="text" class="form-control" name="q" value="" id="recipes">
                 </div>
                 <button type="submit" class="btn btn-info">Search</button>
             </form>
