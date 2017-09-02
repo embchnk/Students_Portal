@@ -81,6 +81,23 @@
         '</div>' +
         '</tr>';
 
+
+        $(function() {
+        $("#i"+i).autocomplete({
+        source: "/recipes/new_recipe/get_ingredients/",
+        select: function (event, ui) { //item selected
+        AutoCompleteSelectHandler(event, ui)
+        },
+        minLength: 1,
+        });
+        });
+
+        function AutoCompleteSelectHandler(event, ui)
+        {
+            if(ui.item){
+            $(event.target).val(ui.item.value);
+        }
+  }
         setTableOfIngredients();
 
         for(j=0;j<i;j++) {
