@@ -3,9 +3,9 @@ from users.models import Profile
 
 
 class Recipe(models.Model):
-    author = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='author')
     title = models.CharField(max_length=250)
-    likes = models.IntegerField()
+    likes = models.ManyToManyField(Profile, blank=True, related_name='likes')
     level = models.CharField(max_length=50)
     instruction = models.CharField(max_length=100000)
     dish_photo = models.CharField(max_length=10000)

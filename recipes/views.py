@@ -24,6 +24,16 @@ def single_recipe(request, recipe_id):
     # except Recipe.DoesNotExist:
     #    raise Http404
     single_recipe = get_object_or_404(Recipe, pk=recipe_id)
+    thumb_is_up = False
+
+    try:
+        u = get_user(request)
+        if single_recipe.likes.filter(user=u).count():
+            thumb_is_up= True
+    except:
+        # this line of code is unnecessary but I must write except
+        thumb_is_up = False
+
     dict = {}
     for i in range(single_recipe.ingredient_set.count()):
         ingredient = single_recipe.ingredient_set.all()[i]
@@ -41,7 +51,24 @@ def single_recipe(request, recipe_id):
                 0]
         dict[ingredient] = str(temp_quantity) + " " + str(temp_unit)
 
-    return render(request, 'recipes/single_recipe.html', {'single_recipe': single_recipe, 'dict': dict})
+    return render(request, 'recipes/single_recipe.html', {'single_recipe': single_recipe, 'dict': dict, 'thumb_is_up':thumb_is_up})
+
+
+def likes(request, recipe_id):
+    recipe = get_object_or_404(Recipe, pk=recipe_id)
+    try:
+        u = get_user(request)
+        if recipe.likes.filter(user=u).count():
+            recipe.likes.remove(Profile.objects.get(user=u))
+        else:
+            recipe.likes.add(Profile.objects.get(user=u))
+            recipe.save()
+    except:
+        #I must complete content of except
+        u='something'
+    return single_recipe(request, recipe_id)
+
+
 
 
 def new_recipe(request):
@@ -50,27 +77,12 @@ def new_recipe(request):
             return render(request, 'recipes/recipe_form.html', {'unit_class': Unit.objects.all()})
         return render(request, 'users/login_form.html', {'form': LoginForm, 'LogInMsg': 'You need to log in to add recipe'})
 
-
-def favorite(request, recipe_id):
-    recipe = get_object_or_404(Recipe, pk=recipe_id)
-    try:
-        if recipe.likes == 1:
-            recipe.likes = 0
-        else:
-            recipe.likes = 1
-        recipe.save()
-    except (KeyError, Recipe.DoesNotExist):
-        return JsonResponse({'success': False})
-    else:
-        return JsonResponse({'success': True})
-
-
 def result_of_addition_recipe(request):
     u = get_user(request)
     if u is not None:
         if u.is_authenticated and request.POST['name'] and request.POST['i0'] and request.POST['instruction']:
             profile = Profile.objects.get(user=u)
-            new_recipe = Recipe(author=profile, title=request.POST['name'], likes=0,
+            new_recipe = Recipe(author=profile, title=request.POST['name'],
                                 instruction=request.POST['instruction'], level=request.POST['level'])
             new_recipe.save()
             for i in range(int(request.POST['number']) + 1):
