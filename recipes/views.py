@@ -1,11 +1,12 @@
 from .models import Recipe, Ingredient, Unit, Quantity
 from users.models import Profile, User
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponseNotFound, JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import get_user
 from django.db.models import Q
 from django.core.exceptions import MultipleObjectsReturned
 from users.forms import LoginForm
+import json
 
 
 # Create your views here.
@@ -113,3 +114,19 @@ def result_of_addition_recipe(request):
             return render(request, 'recipes/recipe_form.html', {'result': 'False', 'unit_class': Unit.objects.all()})
     else:
         return redirect('users:index')
+
+
+def get_ingredients(request):
+    if request.is_ajax():
+        q = request.GET.get('term', '')
+        ingredients = Ingredient.objects.filter(name__icontains=q)
+        results = []
+        for ingredient in ingredients:
+            place_json = {}
+            place_json = ingredient.name
+            results.append(place_json)
+        data = json.dumps(results)
+    else:
+        data = 'fail'
+    mimetype = 'application/json'
+    return HttpResponse(data, mimetype)
