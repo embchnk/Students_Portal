@@ -14,9 +14,9 @@ def recipe_search(request):
         results = Recipe.objects.filter(title__contains=q)
         if results.count() == 1:
             return single_recipe(request, results.values_list('id', flat=True))
-        return render(request, 'search/results.html', {'results': results})
+        return render(request, 'search/results.html', {'all_recipes': results, 'q': q})
     else:
-        return render(request, 'search/results.html', {'results': None})
+        return render(request, 'search/results.html', {'all_recipes': None, 'q': q})
 
 
 def get_recipes(request):
