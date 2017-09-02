@@ -31,7 +31,7 @@ class UserFormView(View):
     def post(self, request):
         form = self.form_class(request.POST)  # whenever user hits submit, all of that gets stored in request.POST
 
-        if form.is_valid():
+        if form.is_valid() and form.cleaned_data['password'] == form.cleaned_data['password_confirm']:
             # creates an object from form but doesnt save it to database yet
             user = form.save(commit=False)
             # now clean/normalized data
@@ -51,7 +51,8 @@ class UserFormView(View):
                     login(request, user)
                     # request.user.(username,profilephoto, etc) - now we can reffer to user whenever we want
                     return redirect('users:index')
-
+        elif form.data['password'] != form.data['password_confirm']:
+            form.add_error('password_confirm', 'Passwords do not match')
         return render(request, self.template_name, {'form': form})
 
 

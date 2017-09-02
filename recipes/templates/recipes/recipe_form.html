@@ -17,6 +17,29 @@
             '</div>' +
             '</tr>';
     window.onload = setTableOfIngredients;
+
+    $(function() {
+    $("#i"+i).autocomplete({
+      source: "/recipes/new_recipe/get_ingredients/",
+      select: function (event, ui) { //item selected
+        AutoCompleteSelectHandler(event, ui)
+      },
+      minLength: 1,
+    });
+  });
+
+  function AutoCompleteSelectHandler(event, ui)
+  {
+   if(ui.item){
+            $(event.target).val(ui.item.value);
+        }
+  }
+
+
+
+
+
+
     function setTableOfIngredients()
     {
         document.getElementById("addition").innerHTML ='<table class="table">\n' +
@@ -70,6 +93,8 @@
 
     }
     </script>
+
+
 
 <!-- I check if result was successful or abortive-->
 {% if result %}
