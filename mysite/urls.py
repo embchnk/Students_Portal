@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^users/', include('users.urls', namespace="users")),
     url(r'^recipes/', include('recipes.urls', namespace="recipes")),
     url(r'^search/', include('search.urls')),
+    url(r'^recipe_matcher/', include('recipe_matcher.urls')),
     #url(r'^users/', include('users.urls')),
 ]
 

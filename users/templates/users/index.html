@@ -5,6 +5,13 @@
 
 {% block body %}
    <h1>Index Dawid Page</h1>
+
+    {% for ingredient in ingredients %}
+        <form action="{% url 'recipe_matcher:match_recipes' %}">
+            <input type="checkbox" name="ingredients" value={{ ingredient.id }}>{{ ingredient }}<br>
+    {% endfor %}
+            <input type="submit" value="Search">
+        </form>
     <!--It doesn't work this way :/-->
     <!--<ul>-->
         <!--{% for user in all_users %}-->
