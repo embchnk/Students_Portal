@@ -4,13 +4,14 @@ from django.views.generic import View
 from .forms import UserForm, LoginForm
 from .models import Profile, Location
 from django.contrib import messages
+from recipes.models import Ingredient
 
 
 def index(request):
     # all_users = UserForm.objects.all()
     # context = {'all_users': all_users}
     # return render(request, 'users/index.html', context)
-    return render(request, 'users/index.html', {'user': request.user})
+    return render(request, 'users/index.html', {'user': request.user, 'ingredients': Ingredient.objects.all()[:10]})
 
 
 class UserFormView(View):
