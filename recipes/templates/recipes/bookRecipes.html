@@ -31,7 +31,7 @@
                                     <td>{{ recipe.title }}</td>
                                     <td>{{ recipe.author.user.first_name }}</td>
                                     <td>
-                                        <a href="{% url 'recipes:single_recipe' recipe.id%}">
+                                        <a href="{% url 'recipes:single_recipe' recipe.id %}">
                                             <button type="button" class="btn btn-primary btn-xs">
                                                 <span class="glyphicon glyphicon-cutlery"></span>&nbsp; Check recipe
                                             </button>
