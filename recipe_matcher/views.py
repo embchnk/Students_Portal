@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from recipes.models import *
+from django.core.exceptions import MultipleObjectsReturned
+from django.contrib.auth import get_user
 
 
 def match_recipes(request):
@@ -25,4 +27,33 @@ def matched_recipe(request, recipe_id):
     for ingredient in Ingredient.objects.get(recipe=single_recipe):
         if ingredient not in ingredients:
             missing_ingredients.append(ingredient)
-    return render(request, 'recipes/single_recipe.html', {'missing_ingredients': missing_ingredients})
+
+    # code copied from single_recipe view
+    thumb_is_up = False
+
+    try:
+        u = get_user(request)
+        if single_recipe.likes.filter(user=u).count():
+            thumb_is_up = True
+    except:
+        # this line of code is unnecessary but I must write except
+        thumb_is_up = False
+
+    dict = {}
+    for i in range(single_recipe.ingredient_set.count()):
+        ingredient = single_recipe.ingredient_set.all()[i]
+        try:
+            temp_quantity = Quantity.objects.filter(recipe=single_recipe, ingredient=ingredient).values_list('value',
+                                                                                                             flat=True).get()
+        except MultipleObjectsReturned:
+            temp_quantity = \
+                Quantity.objects.filter(recipe=single_recipe, ingredient=ingredient).values_list('value', flat=True)[0]
+        try:
+            temp_unit = Unit.objects.filter(recipe=single_recipe, ingredient=ingredient).values_list('unit',
+                                                                                                     flat=True).get()
+        except MultipleObjectsReturned:
+            temp_unit = Unit.objects.filter(recipe=single_recipe, ingredient=ingredient).values_list('unit', flat=True)[
+                0]
+        dict[ingredient] = str(temp_quantity) + " " + str(temp_unit)
+
+    return render(request, 'recipes/single_recipe.html', {'single_recipe': single_recipe, 'missing_ingredients': missing_ingredients, })
