@@ -35,7 +35,7 @@
         <div class="panel panel-default col-md-5">
           <ul class="list-group">
             {% for element, value in dict.items %}
-                <li class="list-group-item"><span style="font-weight: 500;color: black;text-transform: uppercase">{{ element }}</span><span class="quantity pull-right" style="font-weight: 600;">{{ value }}</span></li>
+                <li class="list-group-item"><span style="font-weight: 500;{% if missing %}{% if element.name in missing %}color: red;{% else  %}color: green;{% endif %}{% endif %};text-transform: uppercase">{{ element }}</span><span class="quantity pull-right" style="font-weight: 600;">{{ value }}</span></li>
             {% endfor %}
             </ul>
         </div>

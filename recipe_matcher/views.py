@@ -23,10 +23,10 @@ def matched_recipe(request, recipe_id):
     single_recipe = get_object_or_404(Recipe, pk=recipe_id)
     ingredients = request.session.pop('ingredient', None)
     request.session.modified = True
-    missing_ingredients = []
+    missing = {}
     for ingredient in Ingredient.objects.get(recipe=single_recipe):
         if ingredient not in ingredients:
-            missing_ingredients.append(ingredient)
+            missing[ingredient] = 1
 
     # code copied from single_recipe view
     thumb_is_up = False
@@ -56,4 +56,5 @@ def matched_recipe(request, recipe_id):
                 0]
         dict[ingredient] = str(temp_quantity) + " " + str(temp_unit)
 
-    return render(request, 'recipes/single_recipe.html', {'single_recipe': single_recipe, 'missing_ingredients': missing_ingredients, })
+        return render(request, 'recipes/single_recipe.html',
+                      {'single_recipe': single_recipe, 'dict': dict, 'missing': missing, 'thumb_is_up': thumb_is_up})

@@ -20,11 +20,16 @@ def bookRecipes(request):
 
 # my single recipe
 def single_recipe(request, recipe_id):
-    # try:
-    #    single_recipe = Recipe.objects.get(pk=recipe_id)
-    # except Recipe.DoesNotExist:
-    #    raise Http404
+
     single_recipe = get_object_or_404(Recipe, pk=recipe_id)
+
+    ingredients = request.session.pop('ingredients', None)
+    missing = {}
+    if ingredients is not None:
+        request.session.modified = True
+        for ingredient in single_recipe.ingredient_set.all():
+            if str(ingredient.pk) not in ingredients:
+                missing[ingredient.name] = ingredient
     thumb_is_up = False
 
     try:
@@ -52,7 +57,8 @@ def single_recipe(request, recipe_id):
                 0]
         dict[ingredient] = str(temp_quantity) + " " + str(temp_unit)
 
-    return render(request, 'recipes/single_recipe.html', {'single_recipe': single_recipe, 'dict': dict, 'thumb_is_up':thumb_is_up})
+    return render(request, 'recipes/single_recipe.html', {'single_recipe': single_recipe, 'dict': dict,
+                                                          'thumb_is_up': thumb_is_up, 'missing': missing})
 
 
 def likes(request, recipe_id):
