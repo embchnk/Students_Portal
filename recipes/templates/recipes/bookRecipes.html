@@ -28,7 +28,7 @@
                         {% for recipe in all_recipes %}
                                 <tr>
                                     <td>{{ recipe.title }}</td>
-                                    <td>{{ recipe.author.user.first_name }}</td>
+                                    <td>{{ recipe.author.user.username }}</td>
                                     <td>
                                         <a href="{% url 'recipes:single_recipe' recipe.id %}">
                                             <button type="button" class="btn btn-primary btn-xs">

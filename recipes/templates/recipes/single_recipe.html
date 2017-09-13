@@ -8,7 +8,7 @@
         <div class="col-md-5">
             <h1 class="display-3"><span>{{single_recipe.title}}</span>{% if user.is_authenticated %}<a  href="{% url 'recipes:likes' single_recipe.id%}" class="btn-favorite"><span class="quantity pull-right glyphicon glyphicon-thumbs-{% if thumb_is_up %}down{% else %}up{% endif %}"></span></a>{% endif %}</h1>
             <!--first line in description-->
-            <span style="font-size: 20px;font-weight: 600;">Author</span><span class="quantity pull-right" style="font-size: 20px;">{{ single_recipe.author.user.first_name }}</span><br><br>
+            <span style="font-size: 20px;font-weight: 600;">Author</span><span class="quantity pull-right" style="font-size: 20px;">{{ single_recipe.author.user.username }}</span><br><br>
             <!--second line in description-->
             <span style="font-size: 20px;font-weight: 600;">Level</span>
             <div class="quantity pull-right">
