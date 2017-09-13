@@ -40,7 +40,7 @@ class UserFormView(View):
             password = form.cleaned_data['password']
             user.set_password(password)
             user.save()
-            profile = Profile.objects.create(user = user)
+            profile = Profile.objects.create(user=user)
             profile.save()
 
             # returns User object if credentials are correct
@@ -89,6 +89,7 @@ def logout_user_view(request):
     logout(request)
     return redirect('users:index')
 
+
 def user_info(request):
     if not request.user.is_authenticated:
         return redirect('users:index')
@@ -99,6 +100,7 @@ def user_info(request):
         'user': request.user,
         'leaders': leaders,
         'locations': locations,})
+
 
 def user_info_update(request):
     if not request.user.is_authenticated:
@@ -126,6 +128,7 @@ def user_info_update(request):
     profile.location = location
     profile.save()
     return redirect('users:user-info')
+
 
 def user_info_change_password(request):
     if not request.user.is_authenticated:
