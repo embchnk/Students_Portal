@@ -7,15 +7,14 @@
     <!--loads the path to static files - only if needed -->
     {% load staticfiles %}
     <!--bootstrap, fonts from google -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
-    <link href="{% static 'users/style.css' %}" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-    <script>
+    <link href="{% static 'users/style.css' %}" rel="stylesheet"><script>
 
   $(function() {
     $("#recipes").autocomplete({
@@ -56,7 +55,10 @@
                 <span class="icon-bar"></span>
             </button>
             <!--when clicked, it redirects to the homepage-->
-            <a class="navbar-brand" href="{% url 'users:index' %}">Student's Portal</a>
+            <a class="navbar-left" href="{% url 'users:index' %}">
+                <img src="{% static 'users/logo.png' %}" height="47" class="embed-responsive-item"/>
+            </a>
+            <a class="navbar-brand" href="{% url 'users:index' %}">Studenciaki</a>
         </div>
 
         <!--Navigation items go here. For example: Recipes, User Profiles, etc.-->
@@ -75,7 +77,9 @@
                     <!-- q - variable for user input -->
                     <input type="text" class="form-control" name="q" value="" id="recipes">
                 </div>
-                <button type="submit" class="btn btn-info">Search</button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-search"></i>
+                </button>
             </form>
 
             <ul class="nav navbar-nav navbar-right" >

@@ -5,7 +5,7 @@ from django.contrib.auth import get_user
 
 
 def match_recipes(request):
-    result = request.GET.getlist('ingredients')
+    result = request.GET.getlist('selectedingredient')
     matched_recipes = {}
     for ingredient in result:
         for recipe in Ingredient.objects.get(id=ingredient).recipe.all():

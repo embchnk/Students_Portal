@@ -4,19 +4,174 @@
 {% block title %}Main page{% endblock %}
 
 {% block body %}
-   <h1>Index Dawid Page</h1>
 
-    {% for ingredient in ingredients %}
+    <style>
+        p.block {
+            background-color:gray;
+            padding:10px;
+            text-align: center;
+            width:auto;
+            float:left;
+            margin-left:10px;
+        }
+
+        #wrapper {
+          text-align: center;
+        }
+        #main_body {
+          display: inline-block;
+        }
+        #blocks {
+            display: inline-block;
+        }
+
+        .image {
+           position: relative;
+           width: 100%; /* for IE 6 */
+        }
+
+        h3 {
+           position: absolute;
+           top: 150px;
+           left: 15px;
+           width: 100%;
+        }
+
+        h3 span {
+           color: white;
+           font: bold 24px/45px Helvetica, Sans-Serif;
+           letter-spacing: -1px;
+           background: rgb(0, 0, 0); /* fallback color */
+           background: rgba(0, 0, 0, 0.7);
+           padding: 10px;
+        }
+
+        h3 span.spacer {
+           padding:0 5px;
+        }
+
+
+        /* override position and transform in 3.3.x */
+        .carousel-inner .item.left.active {
+          transform: translateX(-33%);
+        }
+        .carousel-inner .item.right.active {
+          transform: translateX(33%);
+        }
+
+        .carousel-inner .item.next {
+          transform: translateX(33%)
+        }
+        .carousel-inner .item.prev {
+          transform: translateX(-33%)
+        }
+
+        .carousel-inner .item.right,
+        .carousel-inner .item.left {
+          transform: translateX(0);
+        }
+
+
+        .carousel-control.left,.carousel-control.right {background-image:none;}
+
+    </style>
+
+    <div id="wrapper">
         <form action="{% url 'recipe_matcher:match_recipes' %}">
-            <input type="checkbox" name="ingredients" value={{ ingredient.id }}>{{ ingredient }}<br>
-    {% endfor %}
-            <input type="submit" value="Search">
+        <div id="main_body">
+            <h1><span class = "label label-default">Select ingredients:</span></h1>
+            <br/>
+            <div class="row">
+              <div class="col-lg-20">
+                <input list="ingredients" id="ingredients-input" class="form-control" />
+              </div>
+                <input type="submit" value="Search recipes" class="btn btn-primary form-control">
+            </div>
+            <datalist id="ingredients">
+                {% for ingredient in ingredients %}
+                <option id="{{ ingredient.id }}" value="{{ ingredient }}">
+                {% endfor %}
+            </datalist>
+            <br/>
+        </div>
+        <br/>
+            <div id="blocks"></div>
         </form>
-    <!--It doesn't work this way :/-->
-    <!--<ul>-->
-        <!--{% for user in all_users %}-->
-        <!--<li><a href="#">User Name: {{ user.username }}</a></li>-->
-        <!--{% endfor %}-->
-    <!--</ul>-->
+        <h1><span class = "label label-default">Most popular recipes:</span></h1>
+    </div>
+
+<div class="col-md-10 col-md-offset-1">
+<div class="carousel slide" id="myCarousel">
+  <div class="carousel-inner">
+    <div class="item active">
+      <div class="col-md-4">
+          <a href="{% url 'recipes:single_recipe' most_popular_recipe.id %}">
+              <img src="{{ most_popular_recipe.dish_photo }}" class="img-responsive" alt="{{ most_popular_recipe.title }}">
+              <h3><span class='spacer'>{{ most_popular_recipe.title }}</span></h3>
+          </a>
+      </div>
+    </div>
+      {% for recipe in most_popular_recipe_list %}
+    <div class="item">
+      <div class="col-md-4">
+          <a href="{% url 'recipes:single_recipe' recipe.id %}">
+              <img src="{{ recipe.dish_photo }}" class="img-responsive" alt="{{ recipe.title }}">
+              <h3><span class='spacer'>{{ recipe.title }}</span></h3>
+          </a>
+      </div>
+    </div>
+      {% endfor %}
+  </div>
+  <a class="left carousel-control" href="#myCarousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+  <a class="right carousel-control" href="#myCarousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+</div>
+</div>
+
+    <script type="text/javascript">
+        var blocks = new Array();
+        $("#ingredients-input").on('input', function () {
+            var val = this.value;
+            var id = $('#ingredients option[value=' + val + ']').attr('id');
+            if($('#ingredients').find('option').filter(function(){
+                return this.value.toUpperCase() === val.toUpperCase();
+            }).length) {
+                if(!blocks.includes(val))
+                {
+                    var block = $('<p><input type="hidden" id = "selectedingredient" name="selectedingredient" value="' + id + '" readonly>' + val + '&nbsp;<a class=\"remove\" href=\"#\">X</a>' + '</p>');
+                    block.addClass("block");
+                    $("#blocks").append(block);
+                    blocks.push(val);
+                }
+                $("#ingredients-input").val("");
+            }
+        });
+
+        $(document).on('click', '.remove', function() {
+            $(this).parent().remove();
+        });
+    </script>
+
+
+    <script type="text/javascript">
+        $('#myCarousel').carousel({
+        interval: 10000
+        })
+
+        $('.carousel .item').each(function(){
+          var next = $(this).next();
+          if (!next.length) {
+            next = $(this).siblings(':first');
+          }
+          next.children(':first-child').clone().appendTo($(this));
+
+          if (next.next().length>0) {
+            next.next().children(':first-child').clone().appendTo($(this));
+          }
+          else {
+            $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
+          }
+        });
+    </script>
+
 {% endblock %}
 

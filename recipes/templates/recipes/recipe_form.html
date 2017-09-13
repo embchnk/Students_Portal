@@ -69,7 +69,6 @@
 
 
             content+='<tr>' +
-        '<div class="form-group">' +
         '<td><label class="control-label col-sm-3">Ingredient_'+(i+1)+'</label></td>' +
         '<td><input type="text" name="i'+i+'" id="i'+i+'"/></td>' +
         '<td><input type="text" name="quantity'+i+'" id="quantity'+i+'"/></td>' +
@@ -78,7 +77,6 @@
                 '<option value={{ unit }}>{{ unit }}</option>' +
             '{% endfor %}' +
         '</select></td>' +
-        '</div>' +
         '</tr>';
 
 
@@ -107,7 +105,7 @@
         }
 
         document.getElementById("number").value = i;
-
+        window.scrollTo(0,document.body.scrollHeight);
     }
     </script>
 
@@ -162,8 +160,8 @@
                         <div id="addition">
                             <div class="form-group">
                                 <label class="control-label col-sm-2">Ingredient_1</label>
-                                <input type="text" name="i0" id="i0"/>
-                                <input type="text" name="quantity0" id="quantity0"/>
+                                <input type="text" name="i0" id="i0" required />
+                                <input type="text" name="quantity0" id="quantity0" required />
                                 <select name="unit0" id="unit0">
                                     {% for unit in unit_class %}
                                         <option value={{ unit }}>{{ unit }}</option>
@@ -172,14 +170,14 @@
                             </div>
                         </div>
                         <div>
-                            <button type="button" class="btn btn-success" onclick="add_ingredient()">+</button>
+                            <button type="button" class="btn btn-primary" onclick="add_ingredient()">+</button>
                         </div>
 
                         <!-- end-->
 
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <input type="submit" class="btn btn-success" value="Submit" />
+                                <input type="submit" class="btn btn-primary" value="Submit" />
                             </div>
                         </div>
                     </form>

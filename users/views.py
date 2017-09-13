@@ -5,13 +5,19 @@ from .forms import UserForm, LoginForm
 from .models import Profile, Location
 from django.contrib import messages
 from recipes.models import Ingredient
-
+from recipes.models import Recipe
+from django.db.models import Count
 
 def index(request):
-    # all_users = UserForm.objects.all()
-    # context = {'all_users': all_users}
-    # return render(request, 'users/index.html', context)
-    return render(request, 'users/index.html', {'user': request.user, 'ingredients': Ingredient.objects.all()[:10]})
+    #- before likes means descending sorting
+    recipes = Recipe.objects.all().annotate(likes_count=Count('likes')).order_by('-likes_count')[:6]
+    most_popular_recipe = recipes[0]
+    most_popular_recipe_list = recipes[1:6]
+    return render(request, 'users/index.html',
+                  {'user': request.user,
+                   'ingredients': Ingredient.objects.all(),
+                   'most_popular_recipe': most_popular_recipe,
+                   'most_popular_recipe_list': most_popular_recipe_list})
 
 
 class UserFormView(View):

@@ -18,8 +18,12 @@
                                 <img src="{% static 'users/default_user.png' %}" alt="logo" class="img-responsive user-img" width="100%" height="140"/>
                                 {% endif %}
                                 {% csrf_token %}
-                                <input type="file" accept="image/*" name="new-image">
-                                <br>
+                                <label class="btn btn-primary">
+                                    <input type="file" accept="image/*" name="new-image" style="display:none;" >
+                                    Choose picture
+                                </label>
+                                <br/>
+                                <br/>
                             </div>
                             <div class="col-sm-9">
                                 <p class="user-info-text">Registration date: {{ user.date_joined|date:'Y-m-d H:i:s' }}</p>
