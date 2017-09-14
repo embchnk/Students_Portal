@@ -17,24 +17,6 @@
             '</tr>';
     window.onload = setTableOfIngredients;
 
-    $(function() {
-    $("#i"+i).autocomplete({
-      source: "/recipes/new_recipe/get_ingredients/",
-      select: function (event, ui) { //item selected
-        AutoCompleteSelectHandler1(event, ui)
-      },
-      minLength: 1,
-    });
-  });
-
-  function AutoCompleteSelectHandler1(event, ui)
-  {
-   if(ui.item){
-            $(event.target).val(ui.item.value);
-        }
-  }
-
-
     function setTableOfIngredients()
     {
         document.getElementById("addition").innerHTML ='<table class="table">\n' +
@@ -48,6 +30,23 @@
             '                        </thead>\n' +
             '                        <tbody>'+content+'</tbody>\n' +
             '                        </table>';
+
+                $(document).ready( function() {
+        $("#i"+i).autocomplete({
+            source: "/recipes/new_recipe/get_ingredients/",
+            select: function (event, ui) { //item selected
+             AutoCompleteSelectHandler1(event, ui)
+            },
+        minLength: 1,
+        });
+    });
+
+    function AutoCompleteSelectHandler1(event, ui)
+    {
+        if(ui.item){
+            $(event.target).val(ui.item.value);
+        }
+    }
     }
     function add_ingredient()
     {
@@ -74,23 +73,6 @@
         '</select></td>' +
         '</tr>';
 
-
-        $(function() {
-            $("#i"+i).autocomplete({
-                source: "/recipes/new_recipe/get_ingredients/",
-                select: function (event, ui) { //item selected
-                    AutoCompleteSelectHandler1(event, ui)
-                },
-            minLength: 1,
-            });
-        });
-
-        function AutoCompleteSelectHandler1(event, ui)
-        {
-            if(ui.item){
-            $(event.target).val(ui.item.value);
-            }
-        }
         setTableOfIngredients();
 
         for(j=0;j<i;j++) {
@@ -101,9 +83,26 @@
 
         document.getElementById("number").value = i;
         window.scrollTo(0,document.body.scrollHeight);
-    }
-    </script>
 
+            $(document).ready( function() {
+        $("#i"+i).autocomplete({
+            source: "/recipes/new_recipe/get_ingredients/",
+            select: function (event, ui) { //item selected
+             AutoCompleteSelectHandler1(event, ui)
+            },
+        minLength: 1,
+        });
+    });
+
+    function AutoCompleteSelectHandler1(event, ui)
+    {
+        if(ui.item){
+            $(event.target).val(ui.item.value);
+        }
+    }
+    }
+
+    </script>
 
 
 <!-- I check if result was successful or abortive-->
