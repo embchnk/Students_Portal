@@ -25,7 +25,7 @@ class UserViewsTest(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(User.objects.count(), users_count+1)
 
-    def test_add_user_existing_username_creates_user(self):
+    def test_add_user_existing_username_create_user(self):
         users_count = User.objects.count()
         response = self.c.post('/users/register/', {'username': 'temp', 'password': 'temporary', 'password_confirm': 'temporary'})
         self.assertEqual(response.status_code, 200)

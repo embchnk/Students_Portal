@@ -3,7 +3,7 @@ from users.models import Profile
 
 
 class Recipe(models.Model):
-    author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='author')
+    author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='author', blank=True, null=True)
     title = models.CharField(max_length=250)
     likes = models.ManyToManyField(Profile, blank=True, related_name='likes')
     level = models.CharField(max_length=50)

@@ -99,7 +99,10 @@ def result_of_addition_recipe(request):
                     ingredient = Ingredient.objects.get(name=request.POST[ingredient_index])
                 except Ingredient.DoesNotExist:
                     ingredient = Ingredient(name=request.POST[ingredient_index])
-                    ingredient.save()
+                    if not ingredient:
+                        continue
+                    else:
+                        ingredient.save()
                 try:
                     unit = Unit.objects.get(unit=request.POST[unit_index])
                 except Unit.DoesNotExist:
@@ -110,6 +113,8 @@ def result_of_addition_recipe(request):
                 except Quantity.DoesNotExist:
                     quantity = Quantity(value=request.POST[quantity_index])
                     quantity.save()
+                except ValueError:
+                    continue
                 ingredient.recipe.add(new_recipe)
                 unit.recipe.add(new_recipe)
                 unit.ingredient.add(ingredient)

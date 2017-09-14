@@ -10,14 +10,19 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
-    <link href="{% static 'users/style.css' %}" rel="stylesheet"><script>
+    <link href="{% static 'users/style.css' %}" rel="stylesheet">
 
-  $(function() {
-    $("#recipes").autocomplete({
+    <script>var $j = jQuery.noConflict(true);</script>
+    <script>
+
+  $j(function() {
+    $j("#recipes").autocomplete({
       source: "/search/get_recipes/",
       select: function (event, ui) { //item selected
         AutoCompleteSelectHandler(event, ui)
@@ -29,10 +34,10 @@
   function AutoCompleteSelectHandler(event, ui)
   {
    if(ui.item){
-            $(event.target).val(ui.item.value);
+            $j(event.target).val(ui.item.value);
         }
         //submit the form
-        $(event.target.form).submit();
+        $j(event.target.form).submit();
   }
 
     </script>
