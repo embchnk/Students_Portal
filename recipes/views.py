@@ -102,6 +102,7 @@ def result_of_addition_recipe(request):
                     if not ingredient:
                         continue
                     else:
+
                         ingredient.save()
                 try:
                     unit = Unit.objects.get(unit=request.POST[unit_index])
