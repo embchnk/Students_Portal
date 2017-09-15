@@ -23,13 +23,22 @@ def single_recipe(request, recipe_id):
 
     single_recipe = get_object_or_404(Recipe, pk=recipe_id)
 
-    ingredients = request.session.pop('ingredients', None)
-    missing = {}
-    if ingredients is not None:
-        request.session.modified = True
-        for ingredient in single_recipe.ingredient_set.all():
-            if str(ingredient.pk) not in ingredients:
-                missing[ingredient.name] = ingredient
+    referer = request.META.get('HTTP_REFERER')
+    try:
+        if 'recipe_matcher/recipe-matcher' in referer:
+            ingredients = request.session['ingredients']
+            missing = {}
+            if ingredients is not None:
+                request.session.modified = True
+                for ingredient in single_recipe.ingredient_set.all():
+                    if str(ingredient.pk) not in ingredients:
+                        missing[ingredient.name] = ingredient
+        else:
+            missing = {}
+    except TypeError:
+        missing = {}
+    except KeyError:
+        missing = {}
     thumb_is_up = False
 
     try:

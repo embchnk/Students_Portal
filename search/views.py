@@ -8,6 +8,11 @@ import json
 def recipe_search(request):
 
     q = request.GET.get('q')
+    try:
+        del request.session['ingredients']
+        request.session.modified = True
+    except KeyError:
+        pass
     if q == "":
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     if q is not None:
