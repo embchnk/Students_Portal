@@ -105,9 +105,9 @@ def result_of_addition_recipe(request):
                 unit_index = "unit" + str(i)
                 quantity_index = "quantity" + str(i)
                 try:
-                    ingredient = Ingredient.objects.get(name=request.POST[ingredient_index])
+                    ingredient = Ingredient.objects.get(name=request.POST[ingredient_index].lower())
                 except Ingredient.DoesNotExist:
-                    ingredient = Ingredient(name=request.POST[ingredient_index])
+                    ingredient = Ingredient(name=request.POST[ingredient_index].lower())
                     if not ingredient.__str__():
                         continue
                     else:
