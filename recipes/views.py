@@ -98,7 +98,13 @@ def result_of_addition_recipe(request):
         if u.is_authenticated and request.POST['name'] and request.POST['i0'] and request.POST['instruction']:
             profile = Profile.objects.get(user=u)
             new_recipe = Recipe(author=profile, title=request.POST['name'],
-                                instruction=request.POST['instruction'], level=request.POST['level'], dish_photo=request.POST['dish_photo'])
+                                instruction=request.POST['instruction'], level=request.POST['level'])
+            if 'dish_photo' in request.FILES:
+                image = request.FILES['dish_photo']
+            else:
+                image = None
+
+            new_recipe.dish_photo.save('image' + str(request.POST['name']), image)
             new_recipe.save()
             for i in range(int(request.POST['number']) + 1):
                 ingredient_index = "i" + str(i)

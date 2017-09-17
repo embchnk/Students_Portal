@@ -1,14 +1,22 @@
 {% extends 'users/base.html' %}
 {% block title %}{{ single_recipe.title }}{% endblock %}
 {% block body %}
-
+<script type="text/javascript">
+    function func(){
+    var img = document.getElementById('photo');
+    img.src ='../../../../media/zupa.jpg';
+    img.style.width = '300px';
+};
+</script>
+{% load staticfiles %}
+<link href="{% static 'recipes/style_singleRecipe.css' %}" rel="stylesheet">
     <div class="jumbotron">
       <div class="container">
 
         <div class="col-md-5">
-            <h1 class="display-3"><span>{{single_recipe.title}}</span>{% if user.is_authenticated %}<a  href="{% url 'recipes:likes' single_recipe.id%}" class="btn-favorite"><span class="quantity pull-right glyphicon glyphicon-thumbs-{% if thumb_is_up %}down{% else %}up{% endif %}"></span></a>{% endif %}</h1>
-            <!--first line in description-->
-            <span style="font-size: 20px;font-weight: 600;">Author</span><span class="quantity pull-right" style="font-size: 20px;">{{ single_recipe.author.user.username }}</span><br><br>
+            <div><div id="top"><span id="title">{{single_recipe.title}}</span>{% if user.is_authenticated %}<div id="like"><a  href="{% url 'recipes:likes' single_recipe.id%}" class="btn-favorite"><span class="quantity pull-right glyphicon glyphicon-thumbs-{% if thumb_is_up %}down{% else %}up{% endif %}"></span></a></div>{% endif %}</div>
+            </div><!--first line in description-->
+            <div><span style="font-size: 20px;font-weight: 600;">Author</span><span class="quantity pull-right" style="font-size: 20px;">{{ single_recipe.author.user.username }}</span><br><br>
             <!--second line in description-->
             <span style="font-size: 20px;font-weight: 600;">Level</span>
             <div class="quantity pull-right">
@@ -21,9 +29,9 @@
             </div><br><br>
             <!--third line in description-->
         <span style="font-size: 20px;font-weight: 600;">Likes</span><span class="quantity pull-right badge" style="font-size: 20px;">{{ single_recipe.likes.count }}</span><br><br>
-        </div>
-          <div class="col-md-4">
-              <img src="{{ single_recipe.dish_photo }}" onerror="this.src='../../../../media/imagedawid'" height="200" width="200" class="quantity pull-right"/><br>
+        </div></div>
+          <div class="col-md-4" style="display:inline-block;">
+              <img id="photo" src="../../../media/{{ single_recipe.dish_photo }}" onerror=func() width="300 px" class="quantity pull-right"/><br>
           </div>
 
       </div>

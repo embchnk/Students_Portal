@@ -6,6 +6,10 @@
 {% block body %}
 
     <style>
+        body{
+            /* Background pattern from subtlepatterns.com */
+            background: white url("../media/cloth.png");
+        }
         p.block {
             background-color:gray;
             padding:10px;
@@ -106,7 +110,7 @@
     <div class="item active">
       <div class="col-md-4">
           <a href="{% url 'recipes:single_recipe' most_popular_recipe.id %}">
-              <img src="{{ most_popular_recipe.dish_photo }}" class="img-responsive" alt="{{ most_popular_recipe.title }}">
+              <img src="../media/{{ most_popular_recipe.dish_photo }}" class="img-responsive" alt="{{ most_popular_recipe.title }}">
               <h3><span class='spacer'>{{ most_popular_recipe.title }}</span></h3>
           </a>
       </div>
@@ -115,7 +119,7 @@
     <div class="item">
       <div class="col-md-4">
           <a href="{% url 'recipes:single_recipe' recipe.id %}">
-              <img src="{{ recipe.dish_photo }}" class="img-responsive" alt="{{ recipe.title }}">
+              <img src="../media/{{ recipe.dish_photo }}" class="img-responsive" alt="{{ recipe.title }}">
               <h3><span class='spacer'>{{ recipe.title }}</span></h3>
           </a>
       </div>

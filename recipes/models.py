@@ -8,7 +8,7 @@ class Recipe(models.Model):
     likes = models.ManyToManyField(Profile, blank=True, related_name='likes')
     level = models.CharField(max_length=50)
     instruction = models.CharField(max_length=100000)
-    dish_photo = models.CharField(max_length=10000)
+    dish_photo = models.FileField(null=True)
 
     def __str__(self):
         return self.title
