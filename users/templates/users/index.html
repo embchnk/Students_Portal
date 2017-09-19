@@ -110,7 +110,7 @@
     <div class="item active">
       <div class="col-md-4">
           <a href="{% url 'recipes:single_recipe' most_popular_recipe.id %}">
-              <img src="http://127.0.0.1:8000/media/{{ most_popular_recipe.dish_photo }}" class="img-responsive" alt="{{ most_popular_recipe.title }}">
+              <img src="http://127.0.0.1:8000/media/{{ most_popular_recipe.dish_photo }}" height="230" alt="{{ most_popular_recipe.title }}">
               <h3><span class='spacer'>{{ most_popular_recipe.title }}</span></h3>
           </a>
       </div>
@@ -119,7 +119,7 @@
     <div class="item">
       <div class="col-md-4">
           <a href="{% url 'recipes:single_recipe' recipe.id %}">
-              <img src="http://127.0.0.1:8000/media/{{ recipe.dish_photo }}" class="img-responsive" alt="{{ recipe.title }}">
+              <img src="http://127.0.0.1:8000/media/{{ recipe.dish_photo }}" height="230" alt="{{ recipe.title }}">
               <h3><span class='spacer'>{{ recipe.title }}</span></h3>
           </a>
       </div>
