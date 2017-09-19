@@ -78,7 +78,7 @@ def likes(request, recipe_id):
             recipe.likes.remove(Profile.objects.get(user=u))
         else:
             recipe.likes.add(Profile.objects.get(user=u))
-            recipe.save()
+        recipe.save()
     except:
         #I must complete content of except
         u='something'
@@ -101,10 +101,10 @@ def result_of_addition_recipe(request):
                                 instruction=request.POST['instruction'], level=request.POST['level'])
             if 'dish_photo' in request.FILES:
                 image = request.FILES['dish_photo']
+                new_recipe.dish_photo.save('image' + str(request.POST['name']), image)
             else:
-                image = None
+                image = 'recipe_default.png'
 
-            new_recipe.dish_photo.save('image' + str(request.POST['name']), image)
             new_recipe.save()
             for i in range(int(request.POST['number']) + 1):
                 ingredient_index = "i" + str(i)

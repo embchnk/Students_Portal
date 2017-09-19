@@ -4,7 +4,7 @@
 <script type="text/javascript">
     function func(){
     var img = document.getElementById('photo');
-    img.src ='../../../../media/zupa.jpg';
+    img.src ='../../../../media/recipe_default.png';
     img.style.width = '300px';
 };
 </script>
@@ -31,7 +31,7 @@
         <span style="font-size: 20px;font-weight: 600;">Likes</span><span class="quantity pull-right badge" style="font-size: 20px;">{{ single_recipe.likes.count }}</span><br><br>
         </div></div>
           <div class="col-md-4" style="display:inline-block;">
-              <img id="photo" src="../../../media/{{ single_recipe.dish_photo }}" onerror=func() width="300 px" class="quantity pull-right"/><br>
+              <img id="photo" src="http://127.0.0.1:8000/media/{{ single_recipe.dish_photo }}" onerror=func() width="300 px" class="quantity pull-right"/><br>
           </div>
 
       </div>
