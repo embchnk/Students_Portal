@@ -102,8 +102,6 @@ def result_of_addition_recipe(request):
             if 'dish_photo' in request.FILES:
                 image = request.FILES['dish_photo']
                 new_recipe.dish_photo.save('image' + str(request.POST['name']), image)
-            else:
-                image = 'recipe_default.png'
 
             new_recipe.save()
             for i in range(int(request.POST['number']) + 1):
