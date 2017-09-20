@@ -135,7 +135,7 @@
         var blocks = new Array();
         $("#ingredients-input").on('input', function () {
             var val = this.value;
-            var id = $('#ingredients option[value=' + val + ']').attr('id');
+            var id = $('#ingredients option[value="' + val + '"]').attr('id');
             if($('#ingredients').find('option').filter(function(){
                 return this.value.toUpperCase() === val.toUpperCase();
             }).length) {
