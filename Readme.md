@@ -30,7 +30,7 @@ Our project is based on **Django** - the Web framework.
 For every part of **recipe** we have different class model. Every model is somehow **related** to another.
 Most of relations are ManyToMany relations.
 
-![image](https://user-images.githubusercontent.com/26097838/30640593-cc59ee42-9e03-11e7-8eef-77e778ddad0e.png)
+![image](https://user-images.githubusercontent.com/26097838/30640866-175509d0-9e05-11e7-997c-cd9cbafa934a.jpg)
 
 As you can see on first image in Readme, we have got **recipe-matcher** which finds recipes with chosen ingredients.
 It returns a list of recipes sorted by the amount of matching ingredients.
