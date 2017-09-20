@@ -15,7 +15,7 @@ instructions, title, photo and author. Thanks to it recipes on our page are **ea
 # Installation
 
 * First you need to install Python 3.6.2
-* Next install **Django** by writing in your terminal: $ *pip install Django==1.11.4*
+* Next install **Django** by writing in your terminal: *$ pip install Django==1.11.4*
 * Install **django-extensions** by writing: *$ pip install django-extensions*
 
 # Usage
@@ -24,3 +24,18 @@ instructions, title, photo and author. Thanks to it recipes on our page are **ea
 * enter ip address and port number in your browser
 
 # Detailed description
+
+Our project is based on **Django** - the Web framework.
+
+For every part of **recipe** we have different class model. Every model is somehow **related** to another.
+Most of relations are ManyToMany relations.
+
+![image](https://user-images.githubusercontent.com/26097838/30640593-cc59ee42-9e03-11e7-8eef-77e778ddad0e.png)
+
+As you can see on first image in Readme, we have got **recipe-matcher** which finds recipes with chosen ingredients.
+It returns a list of recipes sorted by the amount of matching ingredients.
+
+**Search-field** and **ingredient-field**(in add-recipe form) are using jQuery autocomplete to suggest to user
+already existing recipes/ingredients.
+
+We have prepared **likes** functionality, to create **ranking** of active users.
