@@ -4,8 +4,7 @@ from django.views.generic import View
 from .forms import UserForm, LoginForm
 from .models import Profile, Location
 from django.contrib import messages
-from recipes.models import Ingredient
-from recipes.models import Recipe
+from recipes.models import Ingredient, Recipe
 from django.db.models import Count
 
 def index(request):
