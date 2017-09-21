@@ -10,9 +10,13 @@ from django.db.models import Count
 
 def index(request):
     #- before likes means descending sorting
-    recipes = Recipe.objects.all().annotate(likes_count=Count('likes')).order_by('-likes_count')[:6]
-    most_popular_recipe = recipes[0]
-    most_popular_recipe_list = recipes[1:6]
+    try:
+        recipes = Recipe.objects.all().annotate(likes_count=Count('likes')).order_by('-likes_count')[:6]
+        most_popular_recipe = recipes[0]
+        most_popular_recipe_list = recipes[1:6]
+    except IndexError:
+        most_popular_recipe = None
+        most_popular_recipe_list = None
     return render(request, 'users/index.html',
                   {'user': request.user,
                    'ingredients': Ingredient.objects.all(),

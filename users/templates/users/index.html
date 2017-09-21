@@ -101,6 +101,7 @@
         <br/>
             <div id="blocks"></div>
         </form>
+        {% if most_popular_recipe %}
         <h1><span class = "label label-default">Most popular recipes:</span></h1>
     </div>
 
@@ -176,6 +177,7 @@
           }
         });
     </script>
+    {% endif %}
 
 {% endblock %}
 
