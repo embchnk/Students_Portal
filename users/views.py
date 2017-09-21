@@ -6,6 +6,7 @@ from .models import Profile, Location
 from django.contrib import messages
 from recipes.models import Ingredient, Recipe
 from django.db.models import Count
+from sqlite3 import OperationalError
 
 def index(request):
     #- before likes means descending sorting
