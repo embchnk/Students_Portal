@@ -14,15 +14,18 @@ def index(request):
         recipes = Recipe.objects.all().annotate(likes_count=Count('likes')).order_by('-likes_count')[:6]
         most_popular_recipe = recipes[0]
         most_popular_recipe_list = recipes[1:6]
+        ingredients_list = Ingredient.objects.all()
     except IndexError:
         most_popular_recipe = None
         most_popular_recipe_list = None
+        ingredients_list = None
     except OperationalError:
         most_popular_recipe = None
         most_popular_recipe_list = None
+        ingredients_list = None
     return render(request, 'users/index.html',
                   {'user': request.user,
-                   'ingredients': Ingredient.objects.all(),
+                   'ingredients': ingredients_list,
                    'most_popular_recipe': most_popular_recipe,
                    'most_popular_recipe_list': most_popular_recipe_list})
 
