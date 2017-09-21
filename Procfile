@@ -1,0 +1,1 @@
+web: python Students_Portal/manage.py runserver 0.0.0.0:$PORT
