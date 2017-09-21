@@ -92,6 +92,4 @@ ENV/
 
 # Rope project settings
 .ropeproject
-/db.sqlite3
-/users/migrations/0001_initial.py
-!/users/migrations/0001_initial.py
+
