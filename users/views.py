@@ -16,6 +16,9 @@ def index(request):
     except IndexError:
         most_popular_recipe = None
         most_popular_recipe_list = None
+    except OperationalError:
+        most_popular_recipe = None
+        most_popular_recipe_list = None
     return render(request, 'users/index.html',
                   {'user': request.user,
                    'ingredients': Ingredient.objects.all(),
