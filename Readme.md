@@ -1,6 +1,6 @@
 # **Students Portal**
 
-![image](https://scontent-waw1-1.xx.fbcdn.net/v/t35.0-12/21764131_1539065169469950_807266089_o.png?oh=7b7d17b9338aabf0c43fd7308cb315c2&oe=59C30B08)
+![image](https://user-images.githubusercontent.com/26097838/31003612-e01bfbb6-a4f0-11e7-9ef7-cd488a614eda.png)
 
 # Introduction
 
